@@ -13,3 +13,16 @@ let dateFormatter: NSDateFormatter = {
     dateFormatter.dateFormat = "MM/dd/yyyy"
     return dateFormatter
 }()
+
+extension Array {
+
+    func convertToMovieString() -> String {
+        var finalString = String()
+        
+        for int in self {
+            finalString += "\(int)".stringByAppendingString(",")
+        }
+        
+        return finalString
+    }
+}

@@ -15,7 +15,7 @@
 		78FAB0C31D36B442002DE6BE /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FAB0C21D36B442002DE6BE /* NetworkManager.swift */; };
 		78FAB0C51D36B448002DE6BE /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FAB0C41D36B448002DE6BE /* Movie.swift */; };
 		78FAB0C71D36B44D002DE6BE /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FAB0C61D36B44D002DE6BE /* Person.swift */; };
-		78FAB0C91D36B455002DE6BE /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FAB0C81D36B455002DE6BE /* DateFormatter.swift */; };
+		78FAB0C91D36B455002DE6BE /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FAB0C81D36B455002DE6BE /* Formatters.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +29,7 @@
 		78FAB0C21D36B442002DE6BE /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		78FAB0C41D36B448002DE6BE /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		78FAB0C61D36B44D002DE6BE /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
-		78FAB0C81D36B455002DE6BE /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
+		78FAB0C81D36B455002DE6BE /* Formatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +67,7 @@
 				78FAB0C21D36B442002DE6BE /* NetworkManager.swift */,
 				78FAB0C41D36B448002DE6BE /* Movie.swift */,
 				78FAB0C61D36B44D002DE6BE /* Person.swift */,
-				78FAB0C81D36B455002DE6BE /* DateFormatter.swift */,
+				78FAB0C81D36B455002DE6BE /* Formatters.swift */,
 				78688B441D36A4E700AD68AB /* Main.storyboard */,
 				78688B471D36A4E700AD68AB /* Assets.xcassets */,
 				78688B491D36A4E700AD68AB /* LaunchScreen.storyboard */,
@@ -147,7 +147,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78FAB0C91D36B455002DE6BE /* DateFormatter.swift in Sources */,
+				78FAB0C91D36B455002DE6BE /* Formatters.swift in Sources */,
 				78FAB0C71D36B44D002DE6BE /* Person.swift in Sources */,
 				78FAB0C31D36B442002DE6BE /* NetworkManager.swift in Sources */,
 				78688B431D36A4E700AD68AB /* ViewController.swift in Sources */,

@@ -15,16 +15,31 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        manager.requestEndpoint(.Person, withQueryString: "Tom Hanks") { (result) in
+//        manager.requestEndpoint(.Person, withQueryString: "Tom Hanks") { (result) in
+//            switch result {
+//            case .Success(let json):
+//                for jsonDict in json as! JSONArray {
+//                    let person = Person(json: jsonDict)
+//                    print(person!.name)
+//                }
+//            case .Failure(let error):
+//                print(error)
+//            }
+//        }
+        
+        let intArray = [1810, 3894]
+        
+        let finalString = intArray.convertToMovieString()
+        
+        manager.requestEndpoint(.Movie, withQueryString: finalString) { (result) in
             switch result {
-            case .Success(let json):
-                let jsonDict = json["results"] as? JSONArray
-                for json in jsonDict! {
-                    let person = Person(json: json)
-                    print(person!.name)
+            case .Success(let object):
+                for jsonDict in object as! JSONArray {
+                    let movie = Movie(json: jsonDict)
+                    print(movie!.title)
                 }
-            case .Failure(let error):
-                print(error)
+                
+            case .Failure(let error): print(error)
             }
         }
         

@@ -24,9 +24,12 @@ enum Endpoint: String {
     }
     
     func URL(withQueryString queryString: String) -> NSURL {
-        let finalString = queryString.stringByReplacingOccurrencesOfString(" ", withString: "-")
+        let personString = queryString.stringByReplacingOccurrencesOfString(" ", withString: "-")
         
-        return NSURL(string: baseURL + "search/\(self.rawValue)?api_key=\(apiKey)&query=\(finalString)")!
+        switch self {
+        case .Person: return NSURL(string: baseURL + "search/\(self.rawValue)?api_key=\(apiKey)&query=\(personString)")!
+        case .Movie: return NSURL(string: baseURL + "discover/\(self.rawValue)?api_key=\(apiKey)&with_cast=\(queryString)")!
+        }
     }
 }
 
@@ -45,11 +48,10 @@ struct NetworkManager {
             if let error = error {
                 completion(result: .Failure(error))
             } else  if let data = data {
-                if let json = try? NSJSONSerialization.JSONObjectWithData(data, options: []) {
-                    switch json {
-                    case let result as JSONDict: completion(result: .Success(result))
-                    case let result as JSONArray: completion(result: .Success(result))
-                    default: break
+                if let json = try? NSJSONSerialization.JSONObjectWithData(data, options: []) as? JSONDict {
+                    print(json)
+                    if let results = json!["results"] as? JSONArray {
+                        completion(result: .Success(results))
                     }
                 }
             }
