@@ -45,15 +45,16 @@ struct NetworkManager {
         let request = NSURLRequest(URL: endpoint.URL(withQueryString: queryString))
         
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
-            if let error = error {
-                completion(result: .Failure(error))
-            } else  if let data = data {
-                if let json = try? NSJSONSerialization.JSONObjectWithData(data, options: []) as? JSONDict {
-                    print(json)
-                    if let results = json!["results"] as? JSONArray {
-                        completion(result: .Success(results))
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                if let error = error {
+                    completion(result: .Failure(error))
+                } else  if let data = data {
+                    if let json = try? NSJSONSerialization.JSONObjectWithData(data, options: []) as? JSONDict {
+                        if let results = json!["results"] as? JSONArray {
+                            completion(result: .Success(results))
+                        }
                     }
-                }
+                }                
             }
         }
         task.resume()

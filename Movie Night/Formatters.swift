@@ -15,7 +15,6 @@ let dateFormatter: NSDateFormatter = {
 }()
 
 extension Array {
-
     func convertToMovieString() -> String {
         var finalString = String()
         

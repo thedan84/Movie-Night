@@ -9,37 +9,30 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    let manager = NetworkManager()
+    
+    var movieManager = MovieManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        manager.requestEndpoint(.Person, withQueryString: "Tom Hanks") { (result) in
-//            switch result {
-//            case .Success(let json):
-//                for jsonDict in json as! JSONArray {
-//                    let person = Person(json: jsonDict)
-//                    print(person!.name)
-//                }
-//            case .Failure(let error):
+        
+//        let intArray = [1810, 3894, 1810]
+        
+//        self.movieManager.fetchMoviesWithCast(intArray) { (movies, error) in
+//            if let movies = movies {
+//                print(movies)
+//            } else if let error = error {
 //                print(error)
 //            }
+//            
 //        }
         
-        let intArray = [1810, 3894]
+        let searchString = "Chr"
         
-        let finalString = intArray.convertToMovieString()
-        
-        manager.requestEndpoint(.Movie, withQueryString: finalString) { (result) in
-            switch result {
-            case .Success(let object):
-                for jsonDict in object as! JSONArray {
-                    let movie = Movie(json: jsonDict)
-                    print(movie!.title)
-                }
-                
-            case .Failure(let error): print(error)
+        self.movieManager.fetchPersonWithName(searchString) { (person, error) in
+            if let person = person {
+                print(person)
+            } else if let error = error {
+                print(error)
             }
         }
         

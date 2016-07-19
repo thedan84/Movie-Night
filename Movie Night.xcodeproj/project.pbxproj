@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		781090B51D3E71E6003F066D /* MovieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781090B41D3E71E6003F066D /* MovieManager.swift */; };
 		78688B411D36A4E700AD68AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78688B401D36A4E700AD68AB /* AppDelegate.swift */; };
 		78688B431D36A4E700AD68AB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78688B421D36A4E700AD68AB /* ViewController.swift */; };
 		78688B461D36A4E700AD68AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78688B441D36A4E700AD68AB /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		781090B41D3E71E6003F066D /* MovieManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieManager.swift; sourceTree = "<group>"; };
 		78688B3D1D36A4E700AD68AB /* Movie Night.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Movie Night.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78688B401D36A4E700AD68AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		78688B421D36A4E700AD68AB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 				78688B401D36A4E700AD68AB /* AppDelegate.swift */,
 				78688B421D36A4E700AD68AB /* ViewController.swift */,
 				78FAB0C21D36B442002DE6BE /* NetworkManager.swift */,
+				781090B41D3E71E6003F066D /* MovieManager.swift */,
 				78FAB0C41D36B448002DE6BE /* Movie.swift */,
 				78FAB0C61D36B44D002DE6BE /* Person.swift */,
 				78FAB0C81D36B455002DE6BE /* Formatters.swift */,
@@ -149,6 +152,7 @@
 			files = (
 				78FAB0C91D36B455002DE6BE /* Formatters.swift in Sources */,
 				78FAB0C71D36B44D002DE6BE /* Person.swift in Sources */,
+				781090B51D3E71E6003F066D /* MovieManager.swift in Sources */,
 				78FAB0C31D36B442002DE6BE /* NetworkManager.swift in Sources */,
 				78688B431D36A4E700AD68AB /* ViewController.swift in Sources */,
 				78FAB0C51D36B448002DE6BE /* Movie.swift in Sources */,
