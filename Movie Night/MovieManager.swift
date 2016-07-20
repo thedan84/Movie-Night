@@ -27,7 +27,6 @@ struct MovieManager {
                     completion(movies: movies, error: nil)
                 }
                 
-                
             case .Failure(let error): completion(movies: nil, error: error)
             }
         }
@@ -46,7 +45,6 @@ struct MovieManager {
                         completion(person: personObject, error: nil)
                     }
                 }
-                
                 
             case .Failure(let error): completion(person: nil, error: error)
             }
