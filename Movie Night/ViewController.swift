@@ -26,14 +26,19 @@ class ViewController: UIViewController {
 //            
 //        }
         
-        let searchString = "Chr"
+//        let searchString = "Chr"
+//        
+//        self.movieManager.fetchPersonWithName(searchString) { (person, error) in
+//            if let person = person {
+//                print(person)
+//            } else if let error = error {
+//                print(error)
+//            }
+//        }
         
-        self.movieManager.fetchPersonWithName(searchString) { (person, error) in
-            if let person = person {
-                print(person)
-            } else if let error = error {
-                print(error)
-            }
+        
+        self.movieManager.fetchGenres { (genres) in
+            print(genres)
         }
         
     }

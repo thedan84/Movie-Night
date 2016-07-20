@@ -14,6 +14,7 @@ typealias JSONArray = [JSONDict]
 enum Endpoint: String {
     case Person = "person"
     case Movie = "movie"
+    case Genre = "genre"
     
     private var apiKey: String {
         return "c3005ad5132be3f614b8de0fe58fbdf4"
@@ -23,12 +24,14 @@ enum Endpoint: String {
         return "https://api.themoviedb.org/3/"
     }
     
-    func URL(withQueryString queryString: String) -> NSURL {
-        let personString = queryString.stringByReplacingOccurrencesOfString(" ", withString: "-")
+    func URL(withQueryString queryString: String?) -> NSURL {
         
         switch self {
-        case .Person: return NSURL(string: baseURL + "search/\(self.rawValue)?api_key=\(apiKey)&query=\(personString)")!
+        case .Person:
+            let personString = queryString!.stringByReplacingOccurrencesOfString(" ", withString: "-")
+            return NSURL(string: baseURL + "search/\(self.rawValue)?api_key=\(apiKey)&query=\(personString)")!
         case .Movie: return NSURL(string: baseURL + "discover/\(self.rawValue)?api_key=\(apiKey)&with_cast=\(queryString)")!
+        case .Genre: return NSURL(string: baseURL + "genre/movie/list?api_key=\(apiKey)")!
         }
     }
 }
@@ -41,7 +44,7 @@ enum APIResult {
 struct NetworkManager {
     private let session = NSURLSession(configuration: .defaultSessionConfiguration())
     
-    func requestEndpoint(endpoint: Endpoint, withQueryString queryString: String, completion: (result: APIResult) -> Void) {
+    func requestEndpoint(endpoint: Endpoint, withQueryString queryString: String?, completion: (result: APIResult) -> Void) {
         let request = NSURLRequest(URL: endpoint.URL(withQueryString: queryString))
         
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
@@ -50,6 +53,7 @@ struct NetworkManager {
                     completion(result: .Failure(error))
                 } else  if let data = data {
                     if let json = try? NSJSONSerialization.JSONObjectWithData(data, options: []) as? JSONDict {
+                        print(json)
                         if let results = json!["results"] as? JSONArray {
                             completion(result: .Success(results))
                         }

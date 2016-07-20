@@ -48,6 +48,24 @@ struct MovieManager {
         }
     }
     
+    func fetchGenres(completion: (genres: [Genre]) -> Void) {
+        self.networkManager.requestEndpoint(.Genre, withQueryString: nil) { (result) in
+            print(result)
+            self.parseJSONResult(result, completion: { (object, error) in
+                if let object = object as? JSONArray {
+                    print(object)
+                    var genres = [Genre]()
+                    for json in object {
+                        if let genre = Genre.createFromJSON(json) {
+                            genres.append(genre)
+                        }
+                    }
+                    completion(genres: genres)
+                }
+            })
+        }
+    }
+    
     private func parseJSONResult(result: APIResult, completion: (object: AnyObject?, error: ErrorType?) -> Void) {
         switch result {
         case .Failure(let error):
