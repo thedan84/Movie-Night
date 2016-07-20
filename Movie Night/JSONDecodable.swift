@@ -9,5 +9,6 @@
 import Foundation
 
 protocol JSONDecodable {
-    static func createFromJSON(json: JSONDict) -> Self?
+//    static func createFromJSON(json: JSONDict) -> Self?
+    init?(json: JSONDict)
 }

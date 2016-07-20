@@ -15,67 +15,60 @@ struct MovieManager {
         
     func fetchMoviesWithCast(cast: [Int], completion: (movies: [Movie]?, error: ErrorType?) -> Void) {
         self.networkManager.requestEndpoint(.Movie, withQueryString: cast.convertToMovieString()) { (result) in
-            self.parseJSONResult(result) { (object, error) in
-                if let object = object as? JSONArray {
+            switch result {
+            case .Success(let object):
+                if let results = object["results"] as? JSONArray {
                     var movies = [Movie]()
-                    for json in object {
+                    for json in results {
                         if let movie = Movie(json: json) {
                             movies.append(movie)
                         }
                     }
                     completion(movies: movies, error: nil)
-                } else if let error = error {
-                    completion(movies: nil, error: error)
                 }
+                
+                
+            case .Failure(let error): completion(movies: nil, error: error)
             }
         }
     }
     
     mutating func fetchPersonWithName(name: String, completion: (person: Person?, error: ErrorType?) -> Void) {
         self.networkManager.requestEndpoint(.Person, withQueryString: name) { (result) in
-            self.parseJSONResult(result) { (object, error) in
-                if let object = object as? JSONArray {
-                    for json in object {
+            switch result {
+            case .Success(let object):
+                if let results = object["results"] as? JSONArray {
+                    var personObject: Person!
+                    for json in results {
                         if let person = Person(json: json) {
-                            self.people.append(person)
-                            completion(person: person, error: nil)
+                            personObject = person
                         }
+                        completion(person: personObject, error: nil)
                     }
-                } else if let error = error {
-                    completion(person: nil, error: error)
                 }
+                
+                
+            case .Failure(let error): completion(person: nil, error: error)
             }
         }
     }
     
-    func fetchGenres(completion: (genres: [Genre]) -> Void) {
+    func fetchGenres(completion: (genres: [Genre]?, error: ErrorType?) -> Void) {
         self.networkManager.requestEndpoint(.Genre, withQueryString: nil) { (result) in
-            print(result)
-            self.parseJSONResult(result, completion: { (object, error) in
-                if let object = object as? JSONArray {
-                    print(object)
+            switch result {
+            case .Success(let object):
+                if let results = object["genres"] as? JSONArray {
                     var genres = [Genre]()
-                    for json in object {
-                        if let genre = Genre.createFromJSON(json) {
+                    for json in results {
+                        if let genre = Genre(json: json) {
                             genres.append(genre)
                         }
                     }
-                    completion(genres: genres)
+                    completion(genres: genres, error: nil)
                 }
-            })
-        }
-    }
-    
-    private func parseJSONResult(result: APIResult, completion: (object: AnyObject?, error: ErrorType?) -> Void) {
-        switch result {
-        case .Failure(let error):
-            completion(object: nil, error: error)
-        case .Success(let jsonArray):
-            var object = [AnyObject]()
-            for json in jsonArray as! JSONArray {
-                object.append(json)
+                
+            case.Failure(let error): completion(genres: nil, error: error)
             }
-            completion(object: object, error: nil)
         }
     }
 }

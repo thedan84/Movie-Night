@@ -12,16 +12,16 @@ struct Genre: JSONDecodable {
     let id: Int?
     let name: String?
 
-    static func createFromJSON(json: JSONDict) -> Genre? {
-        guard let id = json["id"] as? Int, let name = json["name"] as? String else { return nil }
-        
-        return Genre(id: id, name: name)
-    }
-    
-//    init?(json: JSONDict) {
+//    static func createFromJSON(json: JSONDict) -> Genre? {
 //        guard let id = json["id"] as? Int, let name = json["name"] as? String else { return nil }
 //        
-//        self.id = id
-//        self.name = name
+//        return Genre(id: id, name: name)
 //    }
+    
+    init?(json: JSONDict) {
+        guard let id = json["id"] as? Int, let name = json["name"] as? String else { return nil }
+        
+        self.id = id
+        self.name = name
+    }
 }

@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
 //        let intArray = [1810, 3894, 1810]
-        
+//        
 //        self.movieManager.fetchMoviesWithCast(intArray) { (movies, error) in
 //            if let movies = movies {
 //                print(movies)
@@ -37,10 +37,9 @@ class ViewController: UIViewController {
 //        }
         
         
-        self.movieManager.fetchGenres { (genres) in
-            print(genres)
-        }
+//        self.movieManager.fetchGenres { (genres, error) in
+//            print(genres)
+//        }
         
     }
 }
-
