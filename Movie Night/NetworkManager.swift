@@ -15,6 +15,7 @@ enum Endpoint: String {
     case Person = "person"
     case Movie = "movie"
     case Genre = "genre"
+    case PopularPeople = "person/popular"
     
     private var apiKey: String {
         return "c3005ad5132be3f614b8de0fe58fbdf4"
@@ -28,10 +29,11 @@ enum Endpoint: String {
         
         switch self {
         case .Person:
-            let personString = queryString!.stringByReplacingOccurrencesOfString(" ", withString: "-")
+            let personString = queryString!.stringByReplacingOccurrencesOfString(" ", withString: ",")
             return NSURL(string: baseURL + "search/\(self.rawValue)?api_key=\(apiKey)&query=\(personString)")!
         case .Movie: return NSURL(string: baseURL + "discover/\(self.rawValue)?api_key=\(apiKey)&with_cast=\(queryString!)")!
         case .Genre: return NSURL(string: baseURL + "genre/movie/list?api_key=\(apiKey)")!
+        case .PopularPeople: return NSURL(string: baseURL + "\(self.rawValue)?api_key=\(apiKey)")!
         }
     }
 }

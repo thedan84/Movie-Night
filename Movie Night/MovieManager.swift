@@ -32,21 +32,40 @@ struct MovieManager {
         }
     }
     
-    mutating func fetchPersonWithName(name: String, completion: (person: Person?, error: ErrorType?) -> Void) {
+    mutating func fetchPersonWithName(name: String, completion: (people: [Person]?, error: ErrorType?) -> Void) {
         self.networkManager.requestEndpoint(.Person, withQueryString: name) { (result) in
             switch result {
             case .Success(let object):
                 if let results = object["results"] as? JSONArray {
-                    var personObject: Person!
+                    var personObject = [Person]()
                     for json in results {
                         if let person = Person(json: json) {
-                            personObject = person
+                            personObject.append(person)
                         }
-                        completion(person: personObject, error: nil)
                     }
+                    completion(people: personObject, error: nil)
                 }
                 
-            case .Failure(let error): completion(person: nil, error: error)
+            case .Failure(let error): completion(people: nil, error: error)
+            }
+        }
+    }
+    
+    func fetchPopularPeople(completion: (people: [Person]?, error: ErrorType?) -> Void) {
+        self.networkManager.requestEndpoint(.PopularPeople, withQueryString: nil) { (result) in
+            switch result {
+            case .Success(let object):
+                if let results = object["results"] as? JSONArray {
+                    var people = [Person]()
+                    for json in results {
+                        if let person = Person(json: json) {
+                            people.append(person)
+                        }
+                    }
+                    completion(people: people, error: nil)
+                }
+                
+            case .Failure(let error): completion(people: nil, error: error)
             }
         }
     }

@@ -26,7 +26,7 @@ class ViewController: UIViewController {
 //            
 //        }
         
-//        let searchString = "Chr"
+//        let searchString = "Christian"
 //        
 //        self.movieManager.fetchPersonWithName(searchString) { (person, error) in
 //            if let person = person {
@@ -40,6 +40,15 @@ class ViewController: UIViewController {
 //        self.movieManager.fetchGenres { (genres, error) in
 //            print(genres)
 //        }
+        
+        
+        self.movieManager.fetchPopularPeople { (people, error) in
+            if let people = people {
+                print(people)
+            } else {
+                print(error)
+            }
+        }
         
     }
 }
