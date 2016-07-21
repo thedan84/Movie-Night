@@ -10,45 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var movieManager = MovieManager()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        let intArray = [1810, 3894, 1810]
-//        
-//        self.movieManager.fetchMoviesWithCast(intArray) { (movies, error) in
-//            if let movies = movies {
-//                print(movies)
-//            } else if let error = error {
-//                print(error)
-//            }
-//            
-//        }
-        
-//        let searchString = "Christian"
-//        
-//        self.movieManager.fetchPersonWithName(searchString) { (person, error) in
-//            if let person = person {
-//                print(person)
-//            } else if let error = error {
-//                print(error)
-//            }
-//        }
-        
-        
-//        self.movieManager.fetchGenres { (genres, error) in
-//            print(genres)
-//        }
-        
-        
-        self.movieManager.fetchPopularPeople { (people, error) in
-            if let people = people {
-                print(people)
-            } else {
-                print(error)
-            }
-        }
         
     }
 }
