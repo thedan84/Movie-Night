@@ -8,15 +8,9 @@
 
 import Foundation
 
-struct Genre: JSONDecodable {
+struct Genre: MovieType {
     let id: Int?
     let name: String?
-
-//    static func createFromJSON(json: JSONDict) -> Genre? {
-//        guard let id = json["id"] as? Int, let name = json["name"] as? String else { return nil }
-//        
-//        return Genre(id: id, name: name)
-//    }
     
     init?(json: JSONDict) {
         guard let id = json["id"] as? Int, let name = json["name"] as? String else { return nil }

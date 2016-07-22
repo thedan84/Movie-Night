@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Movie {
+struct Movie: MovieType {
     let overview: String?
     let releaseDate: NSDate?
     let id: Int?
