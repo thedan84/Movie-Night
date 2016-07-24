@@ -18,20 +18,24 @@
                     <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pdN-bE-6af">
                         <rect key="frame" x="8" y="8" width="304" height="95"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="irX-ir-fnB">
-                                <rect key="frame" x="0.0" y="5" width="65" height="85"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="irX-ir-fnB">
+                                <rect key="frame" x="0.0" y="5" width="92" height="85"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="85" id="3CO-fh-XQy"/>
-                                    <constraint firstAttribute="width" constant="65" id="eOE-K0-6NX"/>
+                                    <constraint firstAttribute="width" constant="92" id="Gz1-e9-3b1"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHa-tb-VD1">
-                                <rect key="frame" x="75" y="37" width="229" height="21"/>
+                                <rect key="frame" x="102" y="37" width="202" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="irX-ir-fnB" secondAttribute="bottom" constant="5" id="d7A-5I-Akx"/>
+                            <constraint firstItem="irX-ir-fnB" firstAttribute="top" secondItem="pdN-bE-6af" secondAttribute="top" constant="5" id="kM5-uH-oLI"/>
+                            <constraint firstItem="irX-ir-fnB" firstAttribute="leading" secondItem="pdN-bE-6af" secondAttribute="leading" id="rGu-8J-MKn"/>
+                        </constraints>
                     </stackView>
                 </subviews>
                 <constraints>

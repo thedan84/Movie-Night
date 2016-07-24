@@ -13,9 +13,7 @@ struct ImageLoader {
         if let url = NSURL(string: "https://image.tmdb.org/t/p/w92\(url)") {
             if let data = NSData(contentsOfURL: url) {
                 if let image = UIImage(data: data) {
-                    NSOperationQueue.mainQueue().addOperationWithBlock {
-                        completion(image: image)
-                    }
+                    completion(image: image)
                 }
             }
         }
