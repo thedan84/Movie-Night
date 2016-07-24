@@ -8,6 +8,9 @@
 
 import UIKit
 
+private let tableViewNibName = "MovieTableViewCell"
+private let cellIdentifier = "MovieCell"
+
 class ActorTableViewController: UITableViewController {
 
     let movieManager = MovieManager()
@@ -25,7 +28,7 @@ class ActorTableViewController: UITableViewController {
             }
         }
         
-        self.tableView.registerNib(UINib(nibName: "MovieTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieCell")
+        self.tableView.registerNib(UINib(nibName: tableViewNibName, bundle: nil), forCellReuseIdentifier: cellIdentifier)
         
         tableView.estimatedRowHeight = 120
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -37,7 +40,7 @@ class ActorTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("MovieCell", forIndexPath: indexPath) as! MovieTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! MovieTableViewCell
 
         let actor = actors[indexPath.row]
         cell.configureWithMovieType(actor)
