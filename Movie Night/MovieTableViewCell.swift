@@ -13,7 +13,7 @@ class MovieTableViewCell: UITableViewCell {
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     
-    let networkManager = NetworkManager()
+    let imageLoader = ImageLoader()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,28 +32,31 @@ class MovieTableViewCell: UITableViewCell {
                 self.titleLabel.text = name
             }
             
-            if let url = NSURL(string: "https://image.tmdb.org/t/p/w185\(person.profileImageURL!)") {
-                if let data = NSData(contentsOfURL: url) {
-                    if let image = UIImage(data: data) {
-                        NSOperationQueue.mainQueue().addOperationWithBlock({
-                            self.posterImageView.image = image
-                        })
+            if let url = person.profileImageURL {
+                self.imageLoader.requestImageDownloadForURL(url) { (image) in
+                    if let image = image {
+                        self.posterImageView.image = image
+                    } else {
+                        self.posterImageView.image = nil
                     }
                 }
             }
             
         case let movie as Movie:
+            if let title = movie.title {
+                self.titleLabel.text = title
+            }
+            
             if let imageURL = movie.posterImageURL {
-                if let imageData = NSData(contentsOfURL: NSURL(string: imageURL)!) {
-                    self.posterImageView.image = UIImage(data: imageData)
-                }
-                
-                if let title = movie.title {
-                    self.titleLabel.text = title
+                self.imageLoader.requestImageDownloadForURL(imageURL) { (image) in
+                    if let image = image {
+                        self.posterImageView.image = image
+                    } else {
+                        self.posterImageView.image = nil
+                    }
                 }
             }
         default: break
         }
     }
-    
 }
