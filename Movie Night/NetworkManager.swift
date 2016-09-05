@@ -33,7 +33,7 @@ enum Endpoint: String {
             return NSURL(string: baseURL + "search/\(self.rawValue)?query=\(personString)&api_key=\(apiKey)")!
         case .Movies: return NSURL(string: baseURL + "discover/\(self.rawValue)?with_cast=\(queryString!)&api_key=\(apiKey)")!
         case .Genre: return NSURL(string: baseURL + "genre/movie/list?api_key=\(apiKey)")!
-        case .PopularPeople: return NSURL(string: baseURL + "\(self.rawValue)?api_key=\(apiKey)")!
+        case .PopularPeople: return NSURL(string: baseURL + "\(self.rawValue)?page=\(queryString!)&api_key=\(apiKey)")!
         }
     }
 }

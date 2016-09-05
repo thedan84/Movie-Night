@@ -13,7 +13,7 @@ struct Movie: MovieType {
     let releaseDate: NSDate?
     let id: Int?
     let title: String?
-    let posterImageURL: String?
+    let posterImageURL: NSURL?
     
     init?(json: JSONDict) {
         guard let overview = json["overview"] as? String, let releaseDateString = json["release_date"] as? String, let id = json["id"] as? Int, let title = json["title"] as? String, let posterImageURL = json["poster_path"] as? String else { return nil }
@@ -22,6 +22,10 @@ struct Movie: MovieType {
         self.releaseDate = dateFormatter.dateFromString(releaseDateString)
         self.id = id
         self.title = title
-        self.posterImageURL = posterImageURL
+        if let imageURL = NSURL(string: "https://image.tmdb.org/t/p/w92\(posterImageURL)") {
+            self.posterImageURL = imageURL
+        } else {
+            self.posterImageURL = nil
+        }
     }
 }

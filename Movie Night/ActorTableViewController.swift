@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ICSPullToRefresh
 
 private let tableViewNibName = "MovieTableViewCell"
 private let cellIdentifier = "MovieCell"
@@ -15,20 +16,35 @@ class ActorTableViewController: UITableViewController {
 
     let movieManager = MovieManager()
     var actors = [Person]()
+    var page = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        movieManager.fetchPopularPeople { (people, error) in
+        
+        self.tableView.registerNib(UINib(nibName: tableViewNibName, bundle: nil), forCellReuseIdentifier: cellIdentifier)
+        
+        movieManager.fetchPopularPeople(withPage: 1) { (people, error) in
             if let actors = people {
                 self.actors += actors
-                self.tableView.reloadData()
+                self.page += 1
             } else if let error = error {
                 print(error)
             }
+            self.tableView.reloadData()
         }
         
-        self.tableView.registerNib(UINib(nibName: tableViewNibName, bundle: nil), forCellReuseIdentifier: cellIdentifier)
+        self.tableView.addInfiniteScrollingWithHandler { 
+            self.movieManager.fetchPopularPeople(withPage: self.page, completion: { (people, error) in
+                if let actors = people {
+                    self.actors += actors
+                    self.page += 1
+                } else if let error = error {
+                    print(error)
+                }
+                self.tableView.infiniteScrollingView?.stopAnimating()
+                self.tableView.reloadData()
+            })
+        }
         
         tableView.estimatedRowHeight = 120
         tableView.rowHeight = UITableViewAutomaticDimension

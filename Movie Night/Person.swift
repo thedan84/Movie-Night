@@ -11,13 +11,17 @@ import UIKit
 struct Person: MovieType {
     let id: Int?
     let name: String?
-    let profileImageURL: String?
+    let profileImageURL: NSURL?
     
     init?(json: JSONDict) {
         guard let name = json["name"] as? String, let id = json["id"] as? Int, let profilePath = json["profile_path"] as? String else { return nil }
         
         self.name = name
         self.id = id
-        self.profileImageURL = profilePath
+        if let imageURL = NSURL(string: "https://image.tmdb.org/t/p/w185\(profilePath)") {
+            self.profileImageURL = imageURL
+        } else {
+            self.profileImageURL = nil
+        }
     }
 }

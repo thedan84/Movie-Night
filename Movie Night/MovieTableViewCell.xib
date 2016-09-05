@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -12,44 +13,51 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="112"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="111"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="111.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pdN-bE-6af">
-                        <rect key="frame" x="8" y="8" width="304" height="95"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="irX-ir-fnB">
-                                <rect key="frame" x="0.0" y="5" width="92" height="85"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="92" id="Gz1-e9-3b1"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHa-tb-VD1">
-                                <rect key="frame" x="102" y="37" width="202" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="irX-ir-fnB">
+                        <rect key="frame" x="8" y="13" width="64" height="85"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="irX-ir-fnB" secondAttribute="bottom" constant="5" id="d7A-5I-Akx"/>
-                            <constraint firstItem="irX-ir-fnB" firstAttribute="top" secondItem="pdN-bE-6af" secondAttribute="top" constant="5" id="kM5-uH-oLI"/>
-                            <constraint firstItem="irX-ir-fnB" firstAttribute="leading" secondItem="pdN-bE-6af" secondAttribute="leading" id="rGu-8J-MKn"/>
+                            <constraint firstAttribute="height" constant="85" id="VPD-C2-Wj5"/>
+                            <constraint firstAttribute="width" secondItem="irX-ir-fnB" secondAttribute="height" multiplier="3:4" id="cQ9-Cc-JL7"/>
+                            <constraint firstAttribute="width" constant="64" id="yr9-ic-vhe"/>
                         </constraints>
-                    </stackView>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="cQ9-Cc-JL7"/>
+                            </mask>
+                        </variation>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHa-tb-VD1">
+                        <rect key="frame" x="82" y="45" width="230" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="pdN-bE-6af" secondAttribute="trailing" id="0zq-CW-qV1"/>
-                    <constraint firstItem="pdN-bE-6af" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="4fT-s6-dX4"/>
-                    <constraint firstItem="pdN-bE-6af" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="HLO-qt-pDH"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="pdN-bE-6af" secondAttribute="bottom" id="hTw-oM-wRX"/>
+                    <constraint firstItem="irX-ir-fnB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="2RO-qi-Eb3"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="irX-ir-fnB" secondAttribute="leading" id="5Qp-Ch-LpJ"/>
+                    <constraint firstItem="EHa-tb-VD1" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="O2y-GQ-2Ne"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="irX-ir-fnB" secondAttribute="bottom" constant="6" id="OhU-9r-pHf"/>
+                    <constraint firstItem="EHa-tb-VD1" firstAttribute="centerY" secondItem="irX-ir-fnB" secondAttribute="centerY" id="QgV-M1-nF9"/>
+                    <constraint firstItem="EHa-tb-VD1" firstAttribute="leading" secondItem="irX-ir-fnB" secondAttribute="trailing" constant="10" id="S95-sK-oZE"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="irX-ir-fnB" secondAttribute="bottom" constant="5.5" id="UnY-ql-Uj9"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="EHa-tb-VD1" secondAttribute="trailing" id="yVi-eJ-HwY"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="OhU-9r-pHf"/>
+                        <exclude reference="QgV-M1-nF9"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="posterImageView" destination="irX-ir-fnB" id="cik-yP-l15"/>
                 <outlet property="titleLabel" destination="EHa-tb-VD1" id="BWJ-fE-aev"/>
             </connections>
-            <point key="canvasLocation" x="369" y="543"/>
+            <point key="canvasLocation" x="98" y="348"/>
         </tableViewCell>
     </objects>
 </document>

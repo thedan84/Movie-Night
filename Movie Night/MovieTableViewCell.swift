@@ -7,13 +7,12 @@
 //
 
 import UIKit
+import Nuke
 
 class MovieTableViewCell: UITableViewCell {
     
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    
-    let imageLoader = ImageLoader()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,36 +23,27 @@ class MovieTableViewCell: UITableViewCell {
 
     }
     
+    override func prepareForReuse() {
+        self.posterImageView.image = nil
+    }
+    
     func configureWithMovieType(movieType: MovieType) {
         switch movieType {
         case let person as Person:
             
-            if let name = person.name {
-                self.titleLabel.text = name
-            }
-            
             if let url = person.profileImageURL {
-                self.imageLoader.requestImageDownloadForURL(url) { (image) in
-                    if let image = image {
-                        self.posterImageView.image = image
-                    } else {
-                        self.posterImageView.image = nil
-                    }
+                self.posterImageView.nk_setImageWith(url).resume()
+                if let name = person.name {
+                    self.titleLabel.text = name
                 }
             }
             
         case let movie as Movie:
-            if let title = movie.title {
-                self.titleLabel.text = title
-            }
             
-            if let imageURL = movie.posterImageURL {
-                self.imageLoader.requestImageDownloadForURL(imageURL) { (image) in
-                    if let image = image {
-                        self.posterImageView.image = image
-                    } else {
-                        self.posterImageView.image = nil
-                    }
+            if let url = movie.posterImageURL {
+                self.posterImageView.nk_setImageWith(url).resume()
+                if let title = movie.title {
+                    self.titleLabel.text = title
                 }
             }
         default: break
