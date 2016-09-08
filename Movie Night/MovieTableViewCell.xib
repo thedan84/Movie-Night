@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -13,7 +13,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="112"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="111.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="111"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="irX-ir-fnB">
@@ -30,21 +30,30 @@
                         </variation>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHa-tb-VD1">
-                        <rect key="frame" x="82" y="45" width="230" height="21"/>
+                        <rect key="frame" x="82" y="45" width="172" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bubble-empty" translatesAutoresizingMaskIntoConstraints="NO" id="Ulu-8E-8NV">
+                        <rect key="frame" x="262" y="31" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="egv-sz-tOV"/>
+                            <constraint firstAttribute="width" constant="50" id="fVl-14-udw"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="irX-ir-fnB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="2RO-qi-Eb3"/>
                     <constraint firstAttribute="leadingMargin" secondItem="irX-ir-fnB" secondAttribute="leading" id="5Qp-Ch-LpJ"/>
+                    <constraint firstItem="Ulu-8E-8NV" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="6zs-QD-3JP"/>
+                    <constraint firstItem="Ulu-8E-8NV" firstAttribute="leading" secondItem="EHa-tb-VD1" secondAttribute="trailing" constant="8" id="NoL-Ih-9XH"/>
                     <constraint firstItem="EHa-tb-VD1" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="O2y-GQ-2Ne"/>
                     <constraint firstAttribute="bottomMargin" secondItem="irX-ir-fnB" secondAttribute="bottom" constant="6" id="OhU-9r-pHf"/>
                     <constraint firstItem="EHa-tb-VD1" firstAttribute="centerY" secondItem="irX-ir-fnB" secondAttribute="centerY" id="QgV-M1-nF9"/>
                     <constraint firstItem="EHa-tb-VD1" firstAttribute="leading" secondItem="irX-ir-fnB" secondAttribute="trailing" constant="10" id="S95-sK-oZE"/>
                     <constraint firstAttribute="bottomMargin" secondItem="irX-ir-fnB" secondAttribute="bottom" constant="5.5" id="UnY-ql-Uj9"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="EHa-tb-VD1" secondAttribute="trailing" id="yVi-eJ-HwY"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Ulu-8E-8NV" secondAttribute="trailing" id="bjB-A7-UFR"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
@@ -54,10 +63,14 @@
                 </variation>
             </tableViewCellContentView>
             <connections>
+                <outlet property="checkboxImageView" destination="Ulu-8E-8NV" id="zBy-k8-Pbd"/>
                 <outlet property="posterImageView" destination="irX-ir-fnB" id="cik-yP-l15"/>
                 <outlet property="titleLabel" destination="EHa-tb-VD1" id="BWJ-fE-aev"/>
             </connections>
             <point key="canvasLocation" x="98" y="348"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="bubble-empty" width="124" height="98"/>
+    </resources>
 </document>
