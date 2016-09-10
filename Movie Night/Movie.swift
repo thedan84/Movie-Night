@@ -14,6 +14,8 @@ struct Movie: MovieType {
     let id: Int?
     let title: String?
     let posterImageURL: NSURL?
+    let type = Type.Movie
+    var selected = false
     
     init?(json: JSONDict) {
         guard let overview = json["overview"] as? String, let releaseDateString = json["release_date"] as? String, let id = json["id"] as? Int, let title = json["title"] as? String, let posterImageURL = json["poster_path"] as? String else { return nil }

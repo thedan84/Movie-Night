@@ -16,9 +16,9 @@ class ActorTableViewController: UITableViewController {
     
     //MARK: - Properties
     let movieManager = MovieManager()
-    var actors = [Person]()
+    var actors = [MovieType]()
     var page = 1
-    var actorsSelected = [Person]()
+    var actorsSelected = [MovieType]()
     var limitOfSelections = 5
 
     //MARK: - View lifecycle
@@ -27,11 +27,18 @@ class ActorTableViewController: UITableViewController {
         
         self.tableView.registerNib(UINib(nibName: tableViewNibName, bundle: nil), forCellReuseIdentifier: cellIdentifier)
         
-        loadInitialSetOfActors()
-        
-        self.tableView.addInfiniteScrollingWithHandler { 
-            self.loadMoreActors(withPage: self.page)
+        movieManager.fetchPopularPeople(withPage: self.page) { (people, error) in
+            if let actors = people {
+                self.actors += actors
+            }
+            self.tableView.reloadData()
         }
+        
+//        loadInitialSetOfActors()
+//
+//        self.tableView.addInfiniteScrollingWithHandler { 
+//            self.loadMoreActors(withPage: self.page)
+//        }
         
         tableView.estimatedRowHeight = 120
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -108,29 +115,29 @@ class ActorTableViewController: UITableViewController {
 //    }
     
     //MARK: - Helper methods
-    private func loadInitialSetOfActors() {
-        movieManager.fetchPopularPeople(withPage: self.page) { (people, error) in
-            if let actors = people {
-                self.actors += actors
-                self.page += 1
-            } else if let error = error {
-                print(error)
-            }
-            self.tableView.reloadData()
-        }
-    }
+//    private func loadInitialSetOfActors() {
+//        movieManager.fetchPopularPeople(withPage: self.page) { (people, error) in
+//            if let actors = people as? [Actor] {
+//                self.actors += actors
+//                self.page += 1
+//            } else if let error = error {
+//                print(error)
+//            }
+//            self.tableView.reloadData()
+//        }
+//    }
     
-    private func loadMoreActors(withPage page: Int) {
-        self.movieManager.fetchPopularPeople(withPage: page, completion: { (people, error) in
-            if let actors = people {
-                self.actors += actors
-                self.page += 1
-            } else if let error = error {
-                print(error)
-            }
-            self.tableView.infiniteScrollingView?.stopAnimating()
-            self.tableView.flashScrollIndicators()
-            self.tableView.reloadData()
-        })
-    }
+//    private func loadMoreActors(withPage page: Int) {
+//        self.movieManager.fetchPopularPeople(withPage: page, completion: { (people, error) in
+//            if let actors = people as? [Person] {
+//                self.actors += actors
+//                self.page += 1
+//            } else if let error = error {
+//                print(error)
+//            }
+//            self.tableView.infiniteScrollingView?.stopAnimating()
+//            self.tableView.flashScrollIndicators()
+//            self.tableView.reloadData()
+//        })
+//    }
 }

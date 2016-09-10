@@ -29,7 +29,7 @@ class MovieTableViewCell: UITableViewCell {
     
     func configureWithMovieType(movieType: MovieType) {
         switch movieType {
-        case let person as Person:
+        case let person as Actor:
             
             if let url = person.profileImageURL {
                 self.posterImageView.nk_setImageWith(url).resume()

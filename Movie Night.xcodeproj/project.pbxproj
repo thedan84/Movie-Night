@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		780A54001D84092600F80ED8 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780A53FF1D84092600F80ED8 /* JSONParser.swift */; };
 		781090B51D3E71E6003F066D /* MovieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781090B41D3E71E6003F066D /* MovieManager.swift */; };
 		783A4E851D7722F3009B71D2 /* ICSPullToRefresh.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 783A4E831D7722F3009B71D2 /* ICSPullToRefresh.framework */; };
 		783A4E861D7722F3009B71D2 /* Nuke.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 783A4E841D7722F3009B71D2 /* Nuke.framework */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		780A53FF1D84092600F80ED8 /* JSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		781090B41D3E71E6003F066D /* MovieManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieManager.swift; sourceTree = "<group>"; };
 		783A4E831D7722F3009B71D2 /* ICSPullToRefresh.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ICSPullToRefresh.framework; path = Carthage/Build/iOS/ICSPullToRefresh.framework; sourceTree = "<group>"; };
 		783A4E841D7722F3009B71D2 /* Nuke.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nuke.framework; path = Carthage/Build/iOS/Nuke.framework; sourceTree = "<group>"; };
@@ -97,10 +99,11 @@
 				78F1A5E01D425F6600ABFD2A /* MovieTableViewCell.xib */,
 				78FAB0C21D36B442002DE6BE /* NetworkManager.swift */,
 				781090B41D3E71E6003F066D /* MovieManager.swift */,
+				78F1A5E31D42603F00ABFD2A /* MovieType.swift */,
 				78FAB0C41D36B448002DE6BE /* Movie.swift */,
 				78FAB0C61D36B44D002DE6BE /* Person.swift */,
-				78F1A5E31D42603F00ABFD2A /* MovieType.swift */,
 				7888C28D1D3F282000F732E1 /* Genre.swift */,
+				780A53FF1D84092600F80ED8 /* JSONParser.swift */,
 				78FAB0C81D36B455002DE6BE /* Formatters.swift */,
 				78688B441D36A4E700AD68AB /* Main.storyboard */,
 				78688B471D36A4E700AD68AB /* Assets.xcassets */,
@@ -203,6 +206,7 @@
 			files = (
 				78C362201D41442100DE36A2 /* ActorTableViewController.swift in Sources */,
 				78FAB0C91D36B455002DE6BE /* Formatters.swift in Sources */,
+				780A54001D84092600F80ED8 /* JSONParser.swift in Sources */,
 				78FAB0C71D36B44D002DE6BE /* Person.swift in Sources */,
 				78F1A5E41D42603F00ABFD2A /* MovieType.swift in Sources */,
 				781090B51D3E71E6003F066D /* MovieManager.swift in Sources */,
