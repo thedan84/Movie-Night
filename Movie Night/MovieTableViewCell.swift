@@ -46,6 +46,12 @@ class MovieTableViewCell: UITableViewCell {
                     self.titleLabel.text = title
                 }
             }
+            
+        case let genre as Genre:
+            
+            if let name = genre.name {
+                self.titleLabel.text = name
+            }
         default: break
         }
     }

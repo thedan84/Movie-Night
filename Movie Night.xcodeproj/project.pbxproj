@@ -11,6 +11,7 @@
 		781090B51D3E71E6003F066D /* MovieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781090B41D3E71E6003F066D /* MovieManager.swift */; };
 		783A4E851D7722F3009B71D2 /* ICSPullToRefresh.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 783A4E831D7722F3009B71D2 /* ICSPullToRefresh.framework */; };
 		783A4E861D7722F3009B71D2 /* Nuke.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 783A4E841D7722F3009B71D2 /* Nuke.framework */; };
+		785888C11D844158002AA332 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785888C01D844158002AA332 /* AlertManager.swift */; };
 		78688B411D36A4E700AD68AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78688B401D36A4E700AD68AB /* AppDelegate.swift */; };
 		78688B431D36A4E700AD68AB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78688B421D36A4E700AD68AB /* ViewController.swift */; };
 		78688B461D36A4E700AD68AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78688B441D36A4E700AD68AB /* Main.storyboard */; };
@@ -32,6 +33,7 @@
 		781090B41D3E71E6003F066D /* MovieManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieManager.swift; sourceTree = "<group>"; };
 		783A4E831D7722F3009B71D2 /* ICSPullToRefresh.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ICSPullToRefresh.framework; path = Carthage/Build/iOS/ICSPullToRefresh.framework; sourceTree = "<group>"; };
 		783A4E841D7722F3009B71D2 /* Nuke.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nuke.framework; path = Carthage/Build/iOS/Nuke.framework; sourceTree = "<group>"; };
+		785888C01D844158002AA332 /* AlertManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		78688B3D1D36A4E700AD68AB /* Movie Night.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Movie Night.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78688B401D36A4E700AD68AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		78688B421D36A4E700AD68AB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				78FAB0C61D36B44D002DE6BE /* Person.swift */,
 				7888C28D1D3F282000F732E1 /* Genre.swift */,
 				780A53FF1D84092600F80ED8 /* JSONParser.swift */,
+				785888C01D844158002AA332 /* AlertManager.swift */,
 				78FAB0C81D36B455002DE6BE /* Formatters.swift */,
 				78688B441D36A4E700AD68AB /* Main.storyboard */,
 				78688B471D36A4E700AD68AB /* Assets.xcassets */,
@@ -209,6 +212,7 @@
 				780A54001D84092600F80ED8 /* JSONParser.swift in Sources */,
 				78FAB0C71D36B44D002DE6BE /* Person.swift in Sources */,
 				78F1A5E41D42603F00ABFD2A /* MovieType.swift in Sources */,
+				785888C11D844158002AA332 /* AlertManager.swift in Sources */,
 				781090B51D3E71E6003F066D /* MovieManager.swift in Sources */,
 				78FAB0C31D36B442002DE6BE /* NetworkManager.swift in Sources */,
 				78688B431D36A4E700AD68AB /* ViewController.swift in Sources */,
