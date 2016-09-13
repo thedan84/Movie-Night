@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		780A54001D84092600F80ED8 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780A53FF1D84092600F80ED8 /* JSONParser.swift */; };
 		781090B51D3E71E6003F066D /* MovieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781090B41D3E71E6003F066D /* MovieManager.swift */; };
+		78196CF31D885C3600B32128 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78196CF21D885C3600B32128 /* User.swift */; };
+		78196CF51D885CD500B32128 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78196CF41D885CD500B32128 /* SearchTableViewController.swift */; };
 		783A4E851D7722F3009B71D2 /* ICSPullToRefresh.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 783A4E831D7722F3009B71D2 /* ICSPullToRefresh.framework */; };
 		783A4E861D7722F3009B71D2 /* Nuke.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 783A4E841D7722F3009B71D2 /* Nuke.framework */; };
 		785888C11D844158002AA332 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785888C01D844158002AA332 /* AlertManager.swift */; };
@@ -31,6 +33,8 @@
 /* Begin PBXFileReference section */
 		780A53FF1D84092600F80ED8 /* JSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		781090B41D3E71E6003F066D /* MovieManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieManager.swift; sourceTree = "<group>"; };
+		78196CF21D885C3600B32128 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		78196CF41D885CD500B32128 /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		783A4E831D7722F3009B71D2 /* ICSPullToRefresh.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ICSPullToRefresh.framework; path = Carthage/Build/iOS/ICSPullToRefresh.framework; sourceTree = "<group>"; };
 		783A4E841D7722F3009B71D2 /* Nuke.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nuke.framework; path = Carthage/Build/iOS/Nuke.framework; sourceTree = "<group>"; };
 		785888C01D844158002AA332 /* AlertManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
@@ -97,6 +101,7 @@
 				78688B401D36A4E700AD68AB /* AppDelegate.swift */,
 				78688B421D36A4E700AD68AB /* ViewController.swift */,
 				78C3621F1D41442100DE36A2 /* ActorTableViewController.swift */,
+				78196CF41D885CD500B32128 /* SearchTableViewController.swift */,
 				78F1A5DF1D425F6600ABFD2A /* MovieTableViewCell.swift */,
 				78F1A5E01D425F6600ABFD2A /* MovieTableViewCell.xib */,
 				78FAB0C21D36B442002DE6BE /* NetworkManager.swift */,
@@ -105,6 +110,7 @@
 				78FAB0C41D36B448002DE6BE /* Movie.swift */,
 				78FAB0C61D36B44D002DE6BE /* Person.swift */,
 				7888C28D1D3F282000F732E1 /* Genre.swift */,
+				78196CF21D885C3600B32128 /* User.swift */,
 				780A53FF1D84092600F80ED8 /* JSONParser.swift */,
 				785888C01D844158002AA332 /* AlertManager.swift */,
 				78FAB0C81D36B455002DE6BE /* Formatters.swift */,
@@ -213,6 +219,8 @@
 				78FAB0C71D36B44D002DE6BE /* Person.swift in Sources */,
 				78F1A5E41D42603F00ABFD2A /* MovieType.swift in Sources */,
 				785888C11D844158002AA332 /* AlertManager.swift in Sources */,
+				78196CF31D885C3600B32128 /* User.swift in Sources */,
+				78196CF51D885CD500B32128 /* SearchTableViewController.swift in Sources */,
 				781090B51D3E71E6003F066D /* MovieManager.swift in Sources */,
 				78FAB0C31D36B442002DE6BE /* NetworkManager.swift in Sources */,
 				78688B431D36A4E700AD68AB /* ViewController.swift in Sources */,

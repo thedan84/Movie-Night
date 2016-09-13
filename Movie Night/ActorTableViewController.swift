@@ -22,7 +22,7 @@ class ActorTableViewController: UITableViewController {
     let movieManager = MovieManager()
     var typeArray = [MovieType]()
     var page = 1
-    var typeSelected = [MovieType]()
+    var typesSelected = [MovieType]()
     var limitOfSelections = 5
     var selectedOption: Option?
 
@@ -35,6 +35,7 @@ class ActorTableViewController: UITableViewController {
         if let option = self.selectedOption {
             switch option {
             case .Actor:
+                self.title = "Actors"
                 movieManager.fetchPopularPeople(withPage: self.page) { (people, error) in
                     if let actors = people {
                         self.typeArray += actors
@@ -59,6 +60,7 @@ class ActorTableViewController: UITableViewController {
                     })
                 }
             case .Genre:
+                self.title = "Genres"
                 movieManager.fetchGenres({ (genres, error) in
                     if let genres = genres {
                         self.typeArray += genres
@@ -69,9 +71,16 @@ class ActorTableViewController: UITableViewController {
                 })
             }
         }
-        
-        tableView.estimatedRowHeight = 120
+
+        let searchVC = SearchTableViewController()
+        searchVC.searchController = UISearchController(searchResultsController: searchVC)
+        searchVC.searchController.searchResultsUpdater = searchVC
+        tableView.tableHeaderView = searchVC.searchController.searchBar
+        searchVC.searchController.searchBar.delegate = searchVC
+        self.definesPresentationContext = true
+                
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 120
         self.tableView.allowsMultipleSelection = true
     }
 
@@ -83,21 +92,13 @@ class ActorTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! MovieTableViewCell
         
-        if let option = self.selectedOption {
-            switch option {
-            case .Actor:
-                let actor = typeArray[indexPath.row]
-                cell.configureWithMovieType(actor)
-                
-                if actor.selected {
-                    cell.checkboxImageView.image = UIImage(named: "bubble-selected")
-                } else {
-                    cell.checkboxImageView.image = UIImage(named: "bubble-empty")
-                }
-            case .Genre:
-                let genre = typeArray[indexPath.row]
-                cell.configureWithMovieType(genre)
-            }
+        let type = typeArray[indexPath.row]
+        cell.configureWithMovieType(type)
+        
+        if type.selected {
+            cell.accessoryType = .Checkmark
+        } else {
+            cell.accessoryType = .None
         }
         
         return cell
@@ -105,46 +106,48 @@ class ActorTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        var actor = typeArray[indexPath.row]
-        actor.selected = !actor.selected
-        
-        typeArray[indexPath.row] = actor
-        
-        if actor.selected {
-            typeSelected.append(actor)
-        } else {
-            for selectedActor in typeSelected {
-                if actor.id == selectedActor.id {
-                    self.typeSelected.removeAtIndex(indexPath.row)
-                }
-            }
-            
-        }
-        tableView.reloadData()
     }
     
-//    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-//        var actor = actors[indexPath.row]
-//        
-//        actor.selected = !actor.selected
-//        
-//        if actorsSelected.count == limitOfSelections {
-//            let alert = UIAlertController(title: "Oops", message: "You already selected \(limitOfSelections) actors. Please deselect one to select another one.", preferredStyle: .Alert)
-//            
-//            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-//            
-//            alert.addAction(okAction)
-//            
-//            self.presentViewController(alert, animated: true, completion: nil)
-//            
-//            return nil
-//        } else if actorsSelected.count == limitOfSelections && actor.id == actors[indexPath.row].id {
-//            actorsSelected.removeAtIndex(indexPath.row)
-//            tableView.reloadData()
-//            
-//            return indexPath
-//        }
-//        
-//        return indexPath
-//    }
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        var type = typeArray[indexPath.row]
+        
+        type.selected = !type.selected
+        typeArray[indexPath.row] = type
+        
+        if typesSelected.count < limitOfSelections {
+            if type.selected {
+                typesSelected.append(type)
+            } else if !type.selected {
+                for (index, selectedType) in typesSelected.enumerate() {
+                    if selectedType.id == type.id {
+                        typesSelected.removeAtIndex(index)
+                    }
+                }
+            }
+        } else if typesSelected.count == limitOfSelections {
+            for (index, selectedType) in typesSelected.enumerate() {
+                if selectedType.id == type.id {
+                    typesSelected.removeAtIndex(index)
+                }
+            }
+        } else {
+            return nil
+        }
+        
+        tableView.reloadData()
+        
+        switch typesSelected.count {
+        case 0:
+            if let option = self.selectedOption {
+                switch option {
+                case .Actor: self.title = "Actors"
+                case .Genre: self.title = "Genres"
+                }
+            }
+        case 1...limitOfSelections: self.title = "\(typesSelected.count)/5 selected"
+        default: break
+        }
+        
+        return indexPath
+    }
 }

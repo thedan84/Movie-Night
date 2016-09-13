@@ -13,7 +13,6 @@ class MovieTableViewCell: UITableViewCell {
     
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var checkboxImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -51,6 +50,7 @@ class MovieTableViewCell: UITableViewCell {
             
             if let name = genre.name {
                 self.titleLabel.text = name
+                self.posterImageView.hidden = true
             }
         default: break
         }
