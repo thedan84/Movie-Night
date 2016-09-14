@@ -36,6 +36,14 @@ class ActorTableViewController: UITableViewController {
             switch option {
             case .Actor:
                 self.title = "Actors"
+                
+                let searchVC = SearchTableViewController()
+                searchVC.searchController = UISearchController(searchResultsController: searchVC)
+                searchVC.searchController.searchResultsUpdater = searchVC
+                tableView.tableHeaderView = searchVC.searchController.searchBar
+                searchVC.searchController.searchBar.delegate = searchVC
+                self.definesPresentationContext = true
+                
                 movieManager.fetchPopularPeople(withPage: self.page) { (people, error) in
                     if let actors = people {
                         self.typeArray += actors
@@ -72,13 +80,6 @@ class ActorTableViewController: UITableViewController {
             }
         }
 
-        let searchVC = SearchTableViewController()
-        searchVC.searchController = UISearchController(searchResultsController: searchVC)
-        searchVC.searchController.searchResultsUpdater = searchVC
-        tableView.tableHeaderView = searchVC.searchController.searchBar
-        searchVC.searchController.searchBar.delegate = searchVC
-        self.definesPresentationContext = true
-                
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
         self.tableView.allowsMultipleSelection = true
