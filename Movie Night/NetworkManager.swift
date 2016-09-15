@@ -14,7 +14,6 @@ typealias JSONArray = [JSONDict]
 enum Endpoint: String {
     case Person = "person"
     case Movies = "movie"
-    case Genre = "genre"
     case PopularPeople = "person/popular"
     
     private var apiKey: String {
@@ -32,8 +31,7 @@ enum Endpoint: String {
             let personString = queryString!.stringByReplacingOccurrencesOfString(" ", withString: ",")
             return NSURL(string: baseURL + "search/\(self.rawValue)?query=\(personString)&api_key=\(apiKey)")!
         case .Movies: return NSURL(string: baseURL + "discover/\(self.rawValue)?with_cast=\(queryString!)&api_key=\(apiKey)")!
-        case .Genre: return NSURL(string: baseURL + "genre/movie/list?api_key=\(apiKey)")!
-        case .PopularPeople: return NSURL(string: baseURL + "\(self.rawValue)?page=\(queryString!)&api_key=\(apiKey)")!
+        case .PopularPeople: return NSURL(string: baseURL + "\(self.rawValue)?api_key=\(apiKey)")!
         }
     }
 }

@@ -34,27 +34,15 @@ struct MovieManager {
             }
         }
     }
-    
-    func fetchPopularPeople(withPage page: Int, completion: (people: [MovieType]?, error: ErrorType?) -> Void) {
-        self.networkManager.requestEndpoint(.PopularPeople, withQueryString: "\(page)") { (result) in
+
+    func fetchPopularPeople(completion: (people: [MovieType]?, error: ErrorType?) -> Void) {
+        self.networkManager.requestEndpoint(.PopularPeople, withQueryString: nil) { (result) in
             switch result {
             case .Success(let object):
                 JSONParser.parse(json: object, forMovieType: .Actor, completion: { (people) in
                     completion(people: people, error: nil)
                 })
             case .Failure(let error): completion(people: nil, error: error)
-            }
-        }
-    }
-
-    func fetchGenres(completion: (genres: [MovieType]?, error: ErrorType?) -> Void) {
-        self.networkManager.requestEndpoint(.Genre, withQueryString: nil) { (result) in
-            switch result {
-            case .Success(let object):
-                JSONParser.parse(json: object, forMovieType: .Genre, completion: { (movieType) in
-                    completion(genres: movieType, error: nil)
-                })
-            case.Failure(let error): completion(genres: nil, error: error)
             }
         }
     }

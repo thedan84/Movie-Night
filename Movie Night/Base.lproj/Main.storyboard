@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9fV-wN-hBM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="9fV-wN-hBM">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -15,32 +16,25 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="9CA-zZ-1c1">
-                                <rect key="frame" x="20" y="51" width="550" height="498"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="r8u-Ye-lWz">
-                                        <rect key="frame" x="0.0" y="0.0" width="550" height="234"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Group" translatesAutoresizingMaskIntoConstraints="NO" id="zUc-47-0pJ">
-                                                <rect key="frame" x="0.0" y="0.0" width="136" height="234"/>
-                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Group" translatesAutoresizingMaskIntoConstraints="NO" id="zUc-47-0pJ"/>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="56d-ef-Kmm">
-                                                <rect key="frame" x="186" y="0.0" width="364" height="234"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Watcher 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7KF-Yo-DnX">
-                                                        <rect key="frame" x="124" y="0.0" width="116" height="117"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Watcher 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7KF-Yo-DnX">
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
-                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgB-XW-Cvm">
-                                                        <rect key="frame" x="98" y="117" width="169" height="117"/>
                                                         <state key="normal" title="Tap to enter preferences"/>
                                                         <connections>
-                                                            <action selector="tapToEnterPreferencesButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5X6-Cy-Q0y"/>
+                                                            <segue destination="LSv-Tu-KAW" kind="show" id="zJR-kk-qnZ"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -48,25 +42,19 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="xPE-HC-INP">
-                                        <rect key="frame" x="0.0" y="264" width="550" height="234"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Group" translatesAutoresizingMaskIntoConstraints="NO" id="auX-y8-TrR">
-                                                <rect key="frame" x="0.0" y="0.0" width="136" height="234"/>
-                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Group" translatesAutoresizingMaskIntoConstraints="NO" id="auX-y8-TrR"/>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="uRu-Of-YkD">
-                                                <rect key="frame" x="186" y="0.0" width="364" height="234"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Watcher 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qTw-hM-dq6">
-                                                        <rect key="frame" x="123" y="0.0" width="119" height="117"/>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
-                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e7v-UP-ghn">
-                                                        <rect key="frame" x="98" y="117" width="169" height="117"/>
                                                         <state key="normal" title="Tap to enter preferences"/>
                                                         <connections>
-                                                            <action selector="tapToEnterPreferencesButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Th1-yL-2z9"/>
+                                                            <segue destination="LSv-Tu-KAW" kind="show" id="Ekx-gx-Lob"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -76,7 +64,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="9CA-zZ-1c1" firstAttribute="top" relation="greaterThanOrEqual" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="31" id="3v7-Y3-awS"/>
                             <constraint firstItem="9CA-zZ-1c1" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="AvK-Gp-SB6"/>
@@ -97,9 +85,9 @@
             <objects>
                 <tableViewController storyboardIdentifier="MovieTableView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LSv-Tu-KAW" customClass="ActorTableViewController" customModule="Movie_Night" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="120" sectionHeaderHeight="28" sectionFooterHeight="28" id="oXt-zI-y8q">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <connections>
                             <outlet property="dataSource" destination="LSv-Tu-KAW" id="ZXf-v2-hN7"/>
                             <outlet property="delegate" destination="LSv-Tu-KAW" id="C1d-y5-F1s"/>
@@ -132,4 +120,7 @@
     <resources>
         <image name="Group" width="136" height="234"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="zJR-kk-qnZ"/>
+    </inferredMetricsTieBreakers>
 </document>

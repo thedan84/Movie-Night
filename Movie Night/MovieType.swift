@@ -9,7 +9,7 @@
 import Foundation
 
 enum Type {
-    case Movie, Actor, Genre
+    case Movie, Actor
 }
 
 protocol MovieType {

@@ -29,14 +29,6 @@ struct JSONParser {
                     }
                 }
             }
-        case .Genre:
-            if let results = json["genres"] as? JSONArray {
-                for json in results {
-                    if let genre = Genre(json: json) {
-                        movieTypeArray.append(genre)
-                    }
-                }
-            }
         }
         completion(movieType: movieTypeArray)
     }

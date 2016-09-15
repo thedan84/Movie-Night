@@ -7,24 +7,18 @@
 //
 
 import UIKit
-//import ICSPullToRefresh
 
 private let tableViewNibName = "MovieTableViewCell"
 private let cellIdentifier = "MovieCell"
-
-enum Option {
-    case Actor, Genre
-}
 
 class ActorTableViewController: UITableViewController {
     
     //MARK: - Properties
     let movieManager = MovieManager()
     var typeArray = [MovieType]()
-    var page = 1
     var typesSelected = [MovieType]()
     var limitOfSelections = 5
-    var selectedOption: Option?
+    var numberOfRowsSelected = Int()
 
     //MARK: - View lifecycle
     override func viewDidLoad() {
@@ -32,53 +26,23 @@ class ActorTableViewController: UITableViewController {
         
         self.tableView.registerNib(UINib(nibName: tableViewNibName, bundle: nil), forCellReuseIdentifier: cellIdentifier)
         
-        if let option = self.selectedOption {
-            switch option {
-            case .Actor:
-                self.title = "Actors"
-                
-                let searchVC = SearchTableViewController()
-                searchVC.searchController = UISearchController(searchResultsController: searchVC)
-                searchVC.searchController.searchResultsUpdater = searchVC
-                tableView.tableHeaderView = searchVC.searchController.searchBar
-                searchVC.searchController.searchBar.delegate = searchVC
-                self.definesPresentationContext = true
-                
-                movieManager.fetchPopularPeople(withPage: self.page) { (people, error) in
-                    if let actors = people {
-                        self.typeArray += actors
-                        self.page += 1
-                    } else if let error = error {
-                        AlertManager.showAlertWith(title: "There appears to be a problem", message: "\(error)", inViewController: self)
-                    }
-                    self.tableView.reloadData()
-                }
-                
-//                self.tableView.addInfiniteScrollingWithHandler {
-//                    self.movieManager.fetchPopularPeople(withPage: self.page, completion: { (people, error) in
-//                        if let actors = people {
-//                            self.typeArray += actors
-//                            self.page += 1
-//                        } else if let error = error {
-//                            AlertManager.showAlertWith(title: "There appears to be a problem", message: "\(error)", inViewController: self)
-//                        }
-//                        self.tableView.infiniteScrollingView?.stopAnimating()
-//                        self.tableView.flashScrollIndicators()
-//                        self.tableView.reloadData()
-//                    })
-//                }
-            case .Genre:
-                self.title = "Genres"
-                movieManager.fetchGenres({ (genres, error) in
-                    if let genres = genres {
-                        self.typeArray += genres
-                    } else if let error = error {
-                        AlertManager.showAlertWith(title: "There appears to be a problem", message: "\(error)", inViewController: self)
-                    }
-                    self.tableView.reloadData()
-                })
+        self.title = "Actors"
+        
+        let searchVC = SearchTableViewController()
+        searchVC.searchController = UISearchController(searchResultsController: searchVC)
+        searchVC.searchController.searchResultsUpdater = searchVC
+        tableView.tableHeaderView = searchVC.searchController.searchBar
+        searchVC.searchController.searchBar.delegate = searchVC
+        self.definesPresentationContext = true
+        
+        movieManager.fetchPopularPeople({ (people, error) in
+            if let actors = people {
+                self.typeArray += actors
+            } else if let error = error {
+                AlertManager.showAlertWith(title: "There appears to be a problem", message: "\(error)", inViewController: self)
             }
-        }
+            self.tableView.reloadData()
+        })
 
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
@@ -137,15 +101,9 @@ class ActorTableViewController: UITableViewController {
         
         tableView.reloadData()
         
-        switch typesSelected.count {
-        case 0:
-            if let option = self.selectedOption {
-                switch option {
-                case .Actor: self.title = "Actors"
-                case .Genre: self.title = "Genres"
-                }
-            }
-        case 1...limitOfSelections: self.title = "\(typesSelected.count)/5 selected"
+        switch numberOfRowsSelected {
+        case 0: self.title = "Actors"
+        case 1...limitOfSelections: self.title = "\(numberOfRowsSelected)/5 selected"
         default: break
         }
         
