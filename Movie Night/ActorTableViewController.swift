@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import ICSPullToRefresh
+//import ICSPullToRefresh
 
 private let tableViewNibName = "MovieTableViewCell"
 private let cellIdentifier = "MovieCell"
@@ -54,19 +54,19 @@ class ActorTableViewController: UITableViewController {
                     self.tableView.reloadData()
                 }
                 
-                self.tableView.addInfiniteScrollingWithHandler {
-                    self.movieManager.fetchPopularPeople(withPage: self.page, completion: { (people, error) in
-                        if let actors = people {
-                            self.typeArray += actors
-                            self.page += 1
-                        } else if let error = error {
-                            AlertManager.showAlertWith(title: "There appears to be a problem", message: "\(error)", inViewController: self)
-                        }
-                        self.tableView.infiniteScrollingView?.stopAnimating()
-                        self.tableView.flashScrollIndicators()
-                        self.tableView.reloadData()
-                    })
-                }
+//                self.tableView.addInfiniteScrollingWithHandler {
+//                    self.movieManager.fetchPopularPeople(withPage: self.page, completion: { (people, error) in
+//                        if let actors = people {
+//                            self.typeArray += actors
+//                            self.page += 1
+//                        } else if let error = error {
+//                            AlertManager.showAlertWith(title: "There appears to be a problem", message: "\(error)", inViewController: self)
+//                        }
+//                        self.tableView.infiniteScrollingView?.stopAnimating()
+//                        self.tableView.flashScrollIndicators()
+//                        self.tableView.reloadData()
+//                    })
+//                }
             case .Genre:
                 self.title = "Genres"
                 movieManager.fetchGenres({ (genres, error) in

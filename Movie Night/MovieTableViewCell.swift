@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Nuke
+//import Nuke
 
 class MovieTableViewCell: UITableViewCell {
     
@@ -29,22 +29,22 @@ class MovieTableViewCell: UITableViewCell {
     func configureWithMovieType(movieType: MovieType) {
         switch movieType {
         case let person as Actor:
-            
-            if let url = person.profileImageURL {
-                self.posterImageView.nk_setImageWith(url).resume()
-                if let name = person.name {
-                    self.titleLabel.text = name
-                }
-            }
+                break
+//            if let url = person.profileImageURL {
+//                self.posterImageView.nk_setImageWith(url).resume()
+//                if let name = person.name {
+//                    self.titleLabel.text = name
+//                }
+//            }
             
         case let movie as Movie:
-            
-            if let url = movie.posterImageURL {
-                self.posterImageView.nk_setImageWith(url).resume()
-                if let title = movie.title {
-                    self.titleLabel.text = title
-                }
-            }
+                break
+//            if let url = movie.posterImageURL {
+//                self.posterImageView.nk_setImageWith(url).resume()
+//                if let title = movie.title {
+//                    self.titleLabel.text = title
+//                }
+//            }
             
         case let genre as Genre:
             
