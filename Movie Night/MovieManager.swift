@@ -34,9 +34,9 @@ struct MovieManager {
             }
         }
     }
-
-    func fetchPopularPeople(completion: (people: [MovieType]?, error: ErrorType?) -> Void) {
-        self.networkManager.requestEndpoint(.PopularPeople, withQueryString: nil) { (result) in
+    
+    func fetchPopularPeople(withPage page: Int, completion: (people: [MovieType]?, error: ErrorType?) -> Void) {
+        self.networkManager.requestEndpoint(.PopularPeople, withQueryString: "\(page)") { (result) in
             switch result {
             case .Success(let object):
                 JSONParser.parse(json: object, forMovieType: .Actor, completion: { (people) in

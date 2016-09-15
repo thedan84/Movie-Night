@@ -19,6 +19,7 @@ class ActorTableViewController: UITableViewController {
     var typesSelected = [MovieType]()
     var limitOfSelections = 5
     var numberOfRowsSelected = Int()
+    var page = 1
 
     //MARK: - View lifecycle
     override func viewDidLoad() {
@@ -28,21 +29,28 @@ class ActorTableViewController: UITableViewController {
         
         self.title = "Actors"
         
-        let searchVC = SearchTableViewController()
-        searchVC.searchController = UISearchController(searchResultsController: searchVC)
-        searchVC.searchController.searchResultsUpdater = searchVC
-        tableView.tableHeaderView = searchVC.searchController.searchBar
-        searchVC.searchController.searchBar.delegate = searchVC
-        self.definesPresentationContext = true
-        
-        movieManager.fetchPopularPeople({ (people, error) in
+        movieManager.fetchPopularPeople(withPage: self.page) { (people, error) in
             if let actors = people {
                 self.typeArray += actors
+                self.page += 1
             } else if let error = error {
                 AlertManager.showAlertWith(title: "There appears to be a problem", message: "\(error)", inViewController: self)
             }
             self.tableView.reloadData()
-        })
+        }
+        
+        tableView.addInfiniteScrollingWithHandler { 
+            self.movieManager.fetchPopularPeople(withPage: self.page) { (people, error) in
+                if let actors = people {
+                    self.typeArray += actors
+                    self.page += 1
+                } else if let error = error {
+                    AlertManager.showAlertWith(title: "There appears to be a problem", message: "\(error)", inViewController: self)
+                }
+                self.tableView.reloadData()
+                self.tableView.infiniteScrollingView?.stopAnimating()
+            }
+        }
 
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
@@ -71,32 +79,22 @@ class ActorTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    }
-    
-    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        
         var type = typeArray[indexPath.row]
         
         type.selected = !type.selected
         typeArray[indexPath.row] = type
         
-        if typesSelected.count < limitOfSelections {
-            if type.selected {
-                typesSelected.append(type)
-            } else if !type.selected {
-                for (index, selectedType) in typesSelected.enumerate() {
-                    if selectedType.id == type.id {
-                        typesSelected.removeAtIndex(index)
-                    }
-                }
-            }
-        } else if typesSelected.count == limitOfSelections {
-            for (index, selectedType) in typesSelected.enumerate() {
-                if selectedType.id == type.id {
+        if type.selected {
+            typesSelected.append(type)
+            numberOfRowsSelected += 1
+        } else {
+            for (index, typeSelected) in typesSelected.enumerate() {
+                if typeSelected.id == type.id {
                     typesSelected.removeAtIndex(index)
                 }
             }
-        } else {
-            return nil
+            numberOfRowsSelected -= 1
         }
         
         tableView.reloadData()
@@ -106,7 +104,13 @@ class ActorTableViewController: UITableViewController {
         case 1...limitOfSelections: self.title = "\(numberOfRowsSelected)/5 selected"
         default: break
         }
-        
-        return indexPath
+    }
+    
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        if numberOfRowsSelected < limitOfSelections {
+            return indexPath
+        } else {
+            return nil
+        }
     }
 }
