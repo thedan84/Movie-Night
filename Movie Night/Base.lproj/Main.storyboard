@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Movie_Night" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="MainViewController" customModule="Movie_Night" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -34,7 +34,7 @@
                                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgB-XW-Cvm">
                                                         <state key="normal" title="Tap to enter preferences"/>
                                                         <connections>
-                                                            <segue destination="LSv-Tu-KAW" kind="show" id="zJR-kk-qnZ"/>
+                                                            <segue destination="A1y-1U-KMB" kind="presentation" identifier="user1ToActorVC" id="zJR-kk-qnZ"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -54,7 +54,7 @@
                                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e7v-UP-ghn">
                                                         <state key="normal" title="Tap to enter preferences"/>
                                                         <connections>
-                                                            <segue destination="LSv-Tu-KAW" kind="show" id="Ekx-gx-Lob"/>
+                                                            <segue destination="A1y-1U-KMB" kind="presentation" identifier="user2ToActorVC" id="Ekx-gx-Lob"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -63,18 +63,29 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LxZ-cu-pJc">
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="matchMeButtonTappedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="C8b-uo-GlQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="9CA-zZ-1c1" firstAttribute="top" relation="greaterThanOrEqual" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="31" id="3v7-Y3-awS"/>
                             <constraint firstItem="9CA-zZ-1c1" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="AvK-Gp-SB6"/>
                             <constraint firstItem="9CA-zZ-1c1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="G5i-Ft-T3W"/>
+                            <constraint firstItem="LxZ-cu-pJc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="MWH-hA-t62"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" relation="greaterThanOrEqual" secondItem="9CA-zZ-1c1" secondAttribute="bottom" constant="51" id="Nhp-G6-1BX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9CA-zZ-1c1" secondAttribute="trailing" constant="10" id="PzD-MK-787"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="LxZ-cu-pJc" secondAttribute="bottom" constant="8" id="cM0-Rb-AXa"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="CGD-z5-jVh"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="matchMeButton" destination="LxZ-cu-pJc" id="3nm-ud-zHs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -93,16 +104,27 @@
                             <outlet property="delegate" destination="LSv-Tu-KAW" id="C1d-y5-F1s"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="zwN-uw-2OR">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="done" id="Jl5-kA-xYT">
+                            <connections>
+                                <action selector="doneButtonTapped:" destination="LSv-Tu-KAW" id="wZd-LQ-CbS"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="doneButton" destination="Jl5-kA-xYT" id="bnH-zU-5mA"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZP3-2h-d9z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1617" y="633"/>
+            <point key="canvasLocation" x="2476" y="633"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="m0B-bf-3Un">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9fV-wN-hBM" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="9fV-wN-hBM" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="7Nz-Bd-33D">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -114,13 +136,31 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VFI-xh-gp8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="286" y="633"/>
+            <point key="canvasLocation" x="177" y="633"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="hRO-yi-Fxz">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="A1y-1U-KMB" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="B5x-Tl-siR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="LSv-Tu-KAW" kind="relationship" relationship="rootViewController" id="UGB-Gg-DCn"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RWI-A9-Mgq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1728.8" y="632.83358320839591"/>
         </scene>
     </scenes>
     <resources>
         <image name="Group" width="136" height="234"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="zJR-kk-qnZ"/>
+        <segue reference="Ekx-gx-Lob"/>
     </inferredMetricsTieBreakers>
 </document>

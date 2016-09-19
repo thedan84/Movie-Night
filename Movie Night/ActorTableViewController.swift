@@ -14,12 +14,15 @@ private let cellIdentifier = "MovieCell"
 class ActorTableViewController: UITableViewController {
     
     //MARK: - Properties
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+    
     let movieManager = MovieManager()
     var typeArray = [MovieType]()
     var typesSelected = [MovieType]()
     var limitOfSelections = 5
     var numberOfRowsSelected = Int()
     var page = 1
+    var method: String?
 
     //MARK: - View lifecycle
     override func viewDidLoad() {
@@ -39,7 +42,7 @@ class ActorTableViewController: UITableViewController {
             self.tableView.reloadData()
         }
         
-        tableView.addInfiniteScrollingWithHandler { 
+        tableView.addInfiniteScrollingWithHandler {
             self.movieManager.fetchPopularPeople(withPage: self.page) { (people, error) in
                 if let actors = people {
                     self.typeArray += actors
@@ -99,6 +102,12 @@ class ActorTableViewController: UITableViewController {
         
         tableView.reloadData()
         
+        if numberOfRowsSelected < limitOfSelections {
+            doneButton.enabled = false
+        } else {
+            doneButton.enabled = true
+        }
+        
         switch numberOfRowsSelected {
         case 0: self.title = "Actors"
         case 1...limitOfSelections: self.title = "\(numberOfRowsSelected)/5 selected"
@@ -111,6 +120,24 @@ class ActorTableViewController: UITableViewController {
             return indexPath
         } else {
             return nil
+        }
+    }
+    
+    @IBAction func doneButtonTapped(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true) { 
+            let mainVC = MainViewController()
+            
+            if self.method == "user1" {
+                mainVC.selectionOfUser1 = self.typesSelected
+            } else if self.method == "user2" {
+                mainVC.selectionOfUser2 = self.typesSelected
+            }
+            
+//            if mainVC.selectionOfUser1 == nil {
+//                mainVC.selectionOfUser1 = self.typesSelected
+//            } else if mainVC.selectionOfUser2 == nil {
+//                mainVC.selectionOfUser2 = self.typesSelected
+//            }
         }
     }
 }

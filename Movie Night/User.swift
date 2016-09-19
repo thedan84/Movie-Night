@@ -9,7 +9,7 @@
 import Foundation
 
 struct User {
-    let selections: [MovieType]
+    var selections: [MovieType]
     
     init(selections: [MovieType]) {
         self.selections = selections
