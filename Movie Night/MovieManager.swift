@@ -10,9 +10,12 @@ import Foundation
 
 struct MovieManager {
     private let networkManager = NetworkManager()
+    
+    var user1Choices = [MovieType]()
+    var user2Choices = [MovieType]()
 
-    func fetchMoviesWithCast(cast: [Int], completion: (movies: [MovieType]?, error: ErrorType?) -> Void) {
-        self.networkManager.requestEndpoint(.Movies, withQueryString: cast.convertToMovieString()) { (result) in
+    func fetchMoviesWithCast(containing cast: String, completion: (movies: [MovieType]?, error: ErrorType?) -> Void) {
+        self.networkManager.requestEndpoint(.Movies, withQueryString: cast) { (result) in
             switch result {
             case .Success(let object):
                 JSONParser.parse(json: object, forMovieType: .Movie, completion: { (movieType) in
@@ -22,7 +25,7 @@ struct MovieManager {
             }
         }
     }
-    
+        
     func fetchPersonWithName(name: String, completion: (people: [MovieType]?, error: ErrorType?) -> Void) {
         self.networkManager.requestEndpoint(.Person, withQueryString: name) { (result) in
             switch result {

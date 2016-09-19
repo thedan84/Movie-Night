@@ -16,13 +16,13 @@ class ActorTableViewController: UITableViewController {
     //MARK: - Properties
     @IBOutlet weak var doneButton: UIBarButtonItem!
     
-    let movieManager = MovieManager()
+    var movieManager = MovieManager()
     var typeArray = [MovieType]()
-    var typesSelected = [MovieType]()
     var limitOfSelections = 5
     var numberOfRowsSelected = Int()
     var page = 1
-    var method: String?
+    var user1Choices = [MovieType]()
+    var user2Choices = [MovieType]()
 
     //MARK: - View lifecycle
     override func viewDidLoad() {
@@ -89,12 +89,24 @@ class ActorTableViewController: UITableViewController {
         typeArray[indexPath.row] = type
         
         if type.selected {
-            typesSelected.append(type)
+            if user1Choices.count < limitOfSelections {
+                user1Choices.append(type)
+            } else if user1Choices.count == limitOfSelections && user2Choices.count < limitOfSelections {
+                user2Choices.append(type)
+            }
             numberOfRowsSelected += 1
         } else {
-            for (index, typeSelected) in typesSelected.enumerate() {
-                if typeSelected.id == type.id {
-                    typesSelected.removeAtIndex(index)
+            if user1Choices.count < limitOfSelections {
+                for (index, typeSelected) in user1Choices.enumerate() {
+                    if typeSelected.id == type.id {
+                        user1Choices.removeAtIndex(index)
+                    }
+                }
+            } else if user1Choices.count == limitOfSelections && user2Choices.count < limitOfSelections {
+                for (index, typeSelected) in user2Choices.enumerate() {
+                    if typeSelected.id == type.id {
+                        user2Choices.removeAtIndex(index)
+                    }
                 }
             }
             numberOfRowsSelected -= 1
@@ -124,20 +136,27 @@ class ActorTableViewController: UITableViewController {
     }
     
     @IBAction func doneButtonTapped(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true) { 
-            let mainVC = MainViewController()
-            
-            if self.method == "user1" {
-                mainVC.selectionOfUser1 = self.typesSelected
-            } else if self.method == "user2" {
-                mainVC.selectionOfUser2 = self.typesSelected
-            }
-            
-//            if mainVC.selectionOfUser1 == nil {
-//                mainVC.selectionOfUser1 = self.typesSelected
-//            } else if mainVC.selectionOfUser2 == nil {
-//                mainVC.selectionOfUser2 = self.typesSelected
-//            }
+        if user2Choices.count < limitOfSelections {
+            let actorVC = storyboard?.instantiateViewControllerWithIdentifier("ActorTableView") as! ActorTableViewController
+            actorVC.user1Choices = self.user1Choices
+            navigationController?.pushViewController(actorVC, animated: true)
+        } else if user1Choices.count == limitOfSelections && user2Choices.count == limitOfSelections {
+            let movieVC = storyboard?.instantiateViewControllerWithIdentifier("MovieTableView") as! MovieTableViewController
+            movieVC.userChoices = self.intersectArray(user1Choices, andArray: user2Choices)
+            navigationController?.pushViewController(movieVC, animated: true)
         }
+    }
+    
+    func intersectArray(array1: [MovieType], andArray array2: [MovieType]) -> String {
+        var finalChoices = String()
+        
+        for int1 in array1 {
+            for int2 in array2 {
+                if int1.id == int2.id {
+                    finalChoices += "\(int1.id!)".stringByAppendingString(",")
+                }
+            }
+        }
+        return finalChoices
     }
 }
