@@ -8,6 +8,7 @@
 
 import Foundation
 
+//Helper struct to parse incoming JSON data
 struct JSONParser {
     static func parse(json json: AnyObject, forMovieType movieType: Type, completion: (movieType: [MovieType]) -> Void) {
         var movieTypeArray = [MovieType]()

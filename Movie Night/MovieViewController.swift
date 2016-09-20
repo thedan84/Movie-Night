@@ -11,18 +11,19 @@ import Nuke
 
 class MovieViewController: UIViewController {
     
+    //MARK: - Properties
     @IBOutlet weak var posterImageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
     var movie: MovieType?
 
+    //MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         if let movie = movie as? Movie, let posterURL = movie.posterImageURL, let title = movie.title, let overview = movie.overview {
             self.posterImageView.nk_setImageWith(posterURL)
-            self.titleLabel.text = title
+            self.title = title
             self.descriptionLabel.text = overview
         }
     }

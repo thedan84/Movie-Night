@@ -8,6 +8,7 @@
 
 import UIKit
 
+//Helper struct to display an alert when there's an error
 struct AlertManager {
     static func showAlertWith(title title: String, message: String, inViewController viewController: UIViewController) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)

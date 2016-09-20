@@ -8,10 +8,12 @@
 
 import Foundation
 
+//MARK: - Type enum
 enum Type {
     case Movie, Actor
 }
 
+//MARK: - MovieType protocol to which every object has to conform
 protocol MovieType {
     var type: Type { get }
     var id: Int? { get }

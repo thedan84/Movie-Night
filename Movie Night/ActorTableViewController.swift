@@ -8,6 +8,7 @@
 
 import UIKit
 
+//MARK: - Constants
 private let tableViewNibName = "MovieTableViewCell"
 private let cellIdentifier = "MovieCell"
 
@@ -28,27 +29,30 @@ class ActorTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(dismiss))
+        self.navigationItem.leftBarButtonItem = cancelButton
+        
         self.tableView.registerNib(UINib(nibName: tableViewNibName, bundle: nil), forCellReuseIdentifier: cellIdentifier)
         
         self.title = "Actors"
         
         movieManager.fetchPopularPeople(withPage: self.page) { (people, error) in
-            if let actors = people {
+            if let error = error {
+                AlertManager.showAlertWith(title: "There appears to be a problem", message: error.localizedDescription, inViewController: self)
+            } else if let actors = people {
                 self.typeArray += actors
                 self.page += 1
-            } else if let error = error {
-                AlertManager.showAlertWith(title: "There appears to be a problem", message: "\(error)", inViewController: self)
             }
             self.tableView.reloadData()
         }
         
         tableView.addInfiniteScrollingWithHandler {
             self.movieManager.fetchPopularPeople(withPage: self.page) { (people, error) in
-                if let actors = people {
+                if let error = error {
+                    AlertManager.showAlertWith(title: "There appears to be a problem", message: error.localizedDescription, inViewController: self)
+                } else if let actors = people {
                     self.typeArray += actors
                     self.page += 1
-                } else if let error = error {
-                    AlertManager.showAlertWith(title: "There appears to be a problem", message: "\(error)", inViewController: self)
                 }
                 self.tableView.reloadData()
                 self.tableView.infiniteScrollingView?.stopAnimating()
@@ -135,6 +139,7 @@ class ActorTableViewController: UITableViewController {
         }
     }
     
+    //MARK: - Action methods
     @IBAction func doneButtonTapped(sender: UIBarButtonItem) {
         if user2Choices.count < limitOfSelections {
             let actorVC = storyboard?.instantiateViewControllerWithIdentifier("ActorTableView") as! ActorTableViewController
@@ -147,7 +152,8 @@ class ActorTableViewController: UITableViewController {
         }
     }
     
-    func intersectArray(array1: [MovieType], andArray array2: [MovieType]) -> String {
+    //MARK: - Helper methods
+    private func intersectArray(array1: [MovieType], andArray array2: [MovieType]) -> String {
         var finalChoices = String()
         
         for int1 in array1 {
@@ -158,5 +164,9 @@ class ActorTableViewController: UITableViewController {
             }
         }
         return finalChoices
+    }
+    
+    func dismiss() {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

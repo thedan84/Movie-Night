@@ -8,12 +8,7 @@
 
 import Foundation
 
-let dateFormatter: NSDateFormatter = {
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = "MM/dd/yyyy"
-    return dateFormatter
-}()
-
+//An extension on Array to convert the array of user's choices to a String
 extension Array {
     func convertToMovieString() -> String {
         var finalString = String()

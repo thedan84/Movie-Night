@@ -9,12 +9,16 @@
 import Foundation
 
 struct MovieManager {
+    
+    //MARK: - Properties
     private let networkManager = NetworkManager()
     
     var user1Choices = [MovieType]()
     var user2Choices = [MovieType]()
 
-    func fetchMoviesWithCast(containing cast: String, completion: (movies: [MovieType]?, error: ErrorType?) -> Void) {
+    //MARK: - Methods
+    //This method fetches the movies regarding to the choices the users made
+    func fetchMoviesWithCast(containing cast: String, completion: (movies: [MovieType]?, error: NSError?) -> Void) {
         self.networkManager.requestEndpoint(.Movies, withQueryString: cast) { (result) in
             switch result {
             case .Success(let object):
@@ -25,20 +29,9 @@ struct MovieManager {
             }
         }
     }
-        
-    func fetchPersonWithName(name: String, completion: (people: [MovieType]?, error: ErrorType?) -> Void) {
-        self.networkManager.requestEndpoint(.Person, withQueryString: name) { (result) in
-            switch result {
-            case .Success(let object):
-                JSONParser.parse(json: object, forMovieType: .Actor, completion: { (movieType) in
-                    completion(people: movieType, error: nil)
-                })
-            case .Failure(let error): completion(people: nil, error: error)
-            }
-        }
-    }
     
-    func fetchPopularPeople(withPage page: Int, completion: (people: [MovieType]?, error: ErrorType?) -> Void) {
+    //This method fetches the most popular people, and paginates the API
+    func fetchPopularPeople(withPage page: Int, completion: (people: [MovieType]?, error: NSError?) -> Void) {
         self.networkManager.requestEndpoint(.PopularPeople, withQueryString: "\(page)") { (result) in
             switch result {
             case .Success(let object):

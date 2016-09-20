@@ -8,24 +8,43 @@
 
 import UIKit
 
+//MARK: - Constants
 private let tableViewNibName = "MovieTableViewCell"
 private let cellIdentifier = "MovieCell"
 
 class MovieTableViewController: UITableViewController {
     
+    //MARK: - Properties
     let movieManager = MovieManager()
     var userChoices: String?
     var movieArray = [MovieType]()
 
+    //MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: UIView())
+        let startOverButton = UIBarButtonItem(title: "Start Over", style: .Done, target: self, action: #selector(startOver))
+        self.navigationItem.rightBarButtonItem = startOverButton
         
         tableView.registerNib(UINib(nibName: tableViewNibName, bundle: nil), forCellReuseIdentifier: cellIdentifier)
         
         movieManager.fetchMoviesWithCast(containing: userChoices!) { (movies, error) in
-            self.movieArray += movies!
-            print(movies)
-            self.tableView.reloadData()
+            if movies!.count < 1 {
+                let alert = UIAlertController(title: "Oops", message: "I couldn't find a match with your choices. Please start over.", preferredStyle: .Alert)
+                
+                let okAction = UIAlertAction(title: "OK", style: .Default, handler: { (okAction) in
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                })
+                
+                alert.addAction(okAction)
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+            } else if let movies = movies {
+                self.title = "Movies"
+                self.movieArray += movies
+                self.tableView.reloadData()
+            }
         }
         
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -51,5 +70,10 @@ class MovieTableViewController: UITableViewController {
         let movieVC = storyboard?.instantiateViewControllerWithIdentifier("MovieVC") as! MovieViewController
         movieVC.movie = movie
         navigationController?.pushViewController(movieVC, animated: true)
+    }
+    
+    //MARK: - Helper methods
+    func startOver() {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

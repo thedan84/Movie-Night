@@ -9,22 +9,23 @@
 import Foundation
 
 struct Movie: MovieType {
+    
+    //MARK: - Properties
     let overview: String?
-    let releaseDate: NSDate?
     let id: Int?
     let title: String?
     let posterImageURL: NSURL?
     let type = Type.Movie
     var selected = false
     
+    //MARK: - Initialization
     init?(json: JSONDict) {
-        guard let overview = json["overview"] as? String, let releaseDateString = json["release_date"] as? String, let id = json["id"] as? Int, let title = json["title"] as? String, let posterImageURL = json["poster_path"] as? String else { return nil }
+        guard let overview = json["overview"] as? String, let id = json["id"] as? Int, let title = json["title"] as? String, let posterImageURL = json["poster_path"] as? String else { return nil }
         
         self.overview = overview
-        self.releaseDate = dateFormatter.dateFromString(releaseDateString)
         self.id = id
         self.title = title
-        if let imageURL = NSURL(string: "https://image.tmdb.org/t/p/w92\(posterImageURL)") {
+        if let imageURL = NSURL(string: "https://image.tmdb.org/t/p/original\(posterImageURL)") {
             self.posterImageURL = imageURL
         } else {
             self.posterImageURL = nil

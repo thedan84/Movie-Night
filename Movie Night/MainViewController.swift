@@ -9,8 +9,14 @@
 import UIKit
 
 class MainViewController: UIViewController {
-        
+    
+    //MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    //MARK: - Status bar appearace
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
 }

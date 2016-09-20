@@ -8,9 +8,11 @@
 
 import Foundation
 
+//MARK: - Typealiases
 typealias JSONDict = [String: AnyObject]
 typealias JSONArray = [JSONDict]
 
+//MARK: - Generating endpoints
 enum Endpoint: String {
     case Person = "person"
     case Movies = "movie"
@@ -36,11 +38,13 @@ enum Endpoint: String {
     }
 }
 
+//MARK: - APIResult enum
 enum APIResult {
     case Success(AnyObject)
-    case Failure(ErrorType)
+    case Failure(NSError)
 }
 
+//MARK: - NetworkManager struct
 struct NetworkManager {
     private let session = NSURLSession(configuration: .defaultSessionConfiguration())
     
