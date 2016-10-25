@@ -1,29 +1,41 @@
+// The MIT License (MIT)
 //
-//  XCTestCase+Nuke.swift
-//  Nuke
-//
-//  Created by Alexander Grebenyuk on 01/10/15.
-//  Copyright (c) 2016 Alexander Grebenyuk. All rights reserved.
-//
+// Copyright (c) 2016 Alexander Grebenyuk (github.com/kean).
 
 import XCTest
 import Foundation
 
 extension XCTestCase {
-    public func expect(block: (fulfill: (Void) -> Void) -> Void) {
-        let expectation = self.expectation()
-        block(fulfill: { expectation.fulfill() })
+    func expect(_ block: (_ fulfill: @escaping (Void) -> Void) -> Void) {
+        let expectation = makeExpectation()
+        block({ expectation.fulfill() })
     }
 
-    public func expectation() -> XCTestExpectation {
-        return self.expectationWithDescription("GenericExpectation")
+    func makeExpectation() -> XCTestExpectation {
+        return self.expectation(description: "GenericExpectation")
+    }
+    
+    func expectNotification(_ name: Notification.Name, object: AnyObject? = nil, handler: XCNotificationExpectationHandler? = nil) -> XCTestExpectation {
+        return self.expectation(forNotification: name.rawValue, object: object, handler: handler)
     }
 
-    public func expectNotification(name: String, object: AnyObject? = nil, handler: XCNotificationExpectationHandler? = nil) -> XCTestExpectation {
-        return self.expectationForNotification(name, object: object, handler: handler)
+    func wait(_ timeout: TimeInterval = 2.0, handler: XCWaitCompletionHandler? = nil) {
+        self.waitForExpectations(timeout: timeout, handler: handler)
     }
+}
 
-    public func wait(timeout: NSTimeInterval = 2.0, handler: XCWaitCompletionHandler? = nil) {
-        self.waitForExpectationsWithTimeout(timeout, handler: handler)
+
+func rnd() -> Int {
+    return Int(arc4random())
+}
+
+func rnd(_ uniform: Int) -> Int {
+    return Int(arc4random_uniform(UInt32(uniform)))
+}
+
+extension Array {
+    func randomItem() -> Element {
+        let index = Int(arc4random_uniform(UInt32(self.count)))
+        return self[index]
     }
 }

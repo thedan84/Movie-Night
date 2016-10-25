@@ -22,7 +22,7 @@ class MovieViewController: UIViewController {
         super.viewDidLoad()
 
         if let movie = movie as? Movie, let posterURL = movie.posterImageURL, let title = movie.title, let overview = movie.overview {
-            self.posterImageView.nk_setImageWith(posterURL)
+            Nuke.loadImage(with: posterURL, into: self.posterImageView)
             self.title = title
             self.descriptionLabel.text = overview
         }

@@ -29,10 +29,10 @@ class ActorTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(dismiss))
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(dismissView))
         self.navigationItem.leftBarButtonItem = cancelButton
         
-        self.tableView.registerNib(UINib(nibName: tableViewNibName, bundle: nil), forCellReuseIdentifier: cellIdentifier)
+        self.tableView.register(UINib(nibName: tableViewNibName, bundle: nil), forCellReuseIdentifier: cellIdentifier)
         
         self.title = "Actors"
         
@@ -65,32 +65,32 @@ class ActorTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return typeArray.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! MovieTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! MovieTableViewCell
         
-        let type = typeArray[indexPath.row]
+        let type = typeArray[(indexPath as NSIndexPath).row]
         cell.configureWithMovieType(type)
         
         if type.selected {
-            cell.accessoryType = .Checkmark
+            cell.accessoryType = .checkmark
         } else {
-            cell.accessoryType = .None
+            cell.accessoryType = .none
         }
         
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
-        var type = typeArray[indexPath.row]
+        var type = typeArray[(indexPath as NSIndexPath).row]
         
         type.selected = !type.selected
-        typeArray[indexPath.row] = type
+        typeArray[(indexPath as NSIndexPath).row] = type
         
         if type.selected {
             if user1Choices.count < limitOfSelections {
@@ -101,15 +101,15 @@ class ActorTableViewController: UITableViewController {
             numberOfRowsSelected += 1
         } else {
             if user1Choices.count < limitOfSelections {
-                for (index, typeSelected) in user1Choices.enumerate() {
+                for (index, typeSelected) in user1Choices.enumerated() {
                     if typeSelected.id == type.id {
-                        user1Choices.removeAtIndex(index)
+                        user1Choices.remove(at: index)
                     }
                 }
             } else if user1Choices.count == limitOfSelections && user2Choices.count < limitOfSelections {
-                for (index, typeSelected) in user2Choices.enumerate() {
+                for (index, typeSelected) in user2Choices.enumerated() {
                     if typeSelected.id == type.id {
-                        user2Choices.removeAtIndex(index)
+                        user2Choices.remove(at: index)
                     }
                 }
             }
@@ -119,9 +119,9 @@ class ActorTableViewController: UITableViewController {
         tableView.reloadData()
         
         if numberOfRowsSelected < limitOfSelections {
-            doneButton.enabled = false
+            doneButton.isEnabled = false
         } else {
-            doneButton.enabled = true
+            doneButton.isEnabled = true
         }
         
         switch numberOfRowsSelected {
@@ -131,7 +131,7 @@ class ActorTableViewController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if numberOfRowsSelected < limitOfSelections {
             return indexPath
         } else {
@@ -140,33 +140,33 @@ class ActorTableViewController: UITableViewController {
     }
     
     //MARK: - Action methods
-    @IBAction func doneButtonTapped(sender: UIBarButtonItem) {
+    @IBAction func doneButtonTapped(_ sender: UIBarButtonItem) {
         if user2Choices.count < limitOfSelections {
-            let actorVC = storyboard?.instantiateViewControllerWithIdentifier("ActorTableView") as! ActorTableViewController
+            let actorVC = storyboard?.instantiateViewController(withIdentifier: "ActorTableView") as! ActorTableViewController
             actorVC.user1Choices = self.user1Choices
             navigationController?.pushViewController(actorVC, animated: true)
         } else if user1Choices.count == limitOfSelections && user2Choices.count == limitOfSelections {
-            let movieVC = storyboard?.instantiateViewControllerWithIdentifier("MovieTableView") as! MovieTableViewController
+            let movieVC = storyboard?.instantiateViewController(withIdentifier: "MovieTableView") as! MovieTableViewController
             movieVC.userChoices = self.intersectArray(user1Choices, andArray: user2Choices)
             navigationController?.pushViewController(movieVC, animated: true)
         }
     }
     
     //MARK: - Helper methods
-    private func intersectArray(array1: [MovieType], andArray array2: [MovieType]) -> String {
+    fileprivate func intersectArray(_ array1: [MovieType], andArray array2: [MovieType]) -> String {
         var finalChoices = String()
         
         for int1 in array1 {
             for int2 in array2 {
                 if int1.id == int2.id {
-                    finalChoices += "\(int1.id!)".stringByAppendingString(",")
+                    finalChoices += "\(int1.id!)" + ","
                 }
             }
         }
         return finalChoices
     }
     
-    func dismiss() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    func dismissView() {
+        self.dismiss(animated: true, completion: nil)
     }
 }

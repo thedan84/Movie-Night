@@ -10,7 +10,7 @@ import Foundation
 
 //MARK: - Type enum
 enum Type {
-    case Movie, Actor
+    case movie, actor
 }
 
 //MARK: - MovieType protocol to which every object has to conform

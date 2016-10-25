@@ -14,7 +14,7 @@ extension Array {
         var finalString = String()
         
         for int in self {
-            finalString += "\(int)".stringByAppendingString(",")
+            finalString += "\(int)" + ","
         }
         
         return finalString

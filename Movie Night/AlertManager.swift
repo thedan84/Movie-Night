@@ -10,13 +10,13 @@ import UIKit
 
 //Helper struct to display an alert when there's an error
 struct AlertManager {
-    static func showAlertWith(title title: String, message: String, inViewController viewController: UIViewController) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+    static func showAlertWith(title: String, message: String, inViewController viewController: UIViewController) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         
         alert.addAction(okAction)
         
-        viewController.presentViewController(alert, animated: true, completion: nil)
+        viewController.present(alert, animated: true, completion: nil)
     }
 }

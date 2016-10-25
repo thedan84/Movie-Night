@@ -14,8 +14,8 @@ struct Movie: MovieType {
     let overview: String?
     let id: Int?
     let title: String?
-    let posterImageURL: NSURL?
-    let type = Type.Movie
+    let posterImageURL: URL?
+    let type = Type.movie
     var selected = false
     
     //MARK: - Initialization
@@ -25,7 +25,7 @@ struct Movie: MovieType {
         self.overview = overview
         self.id = id
         self.title = title
-        if let imageURL = NSURL(string: "https://image.tmdb.org/t/p/original\(posterImageURL)") {
+        if let imageURL = URL(string: "https://image.tmdb.org/t/p/original\(posterImageURL)") {
             self.posterImageURL = imageURL
         } else {
             self.posterImageURL = nil

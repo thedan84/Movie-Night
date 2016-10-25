@@ -20,7 +20,7 @@ class MovieTableViewCell: UITableViewCell {
         super.awakeFromNib()
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
@@ -29,12 +29,12 @@ class MovieTableViewCell: UITableViewCell {
     }
     
     //MARK: - Cell configuration
-    func configureWithMovieType(movieType: MovieType) {
+    func configureWithMovieType(_ movieType: MovieType) {
         switch movieType {
         case let person as Actor:
             
             if let url = person.profileImageURL {
-                self.posterImageView.nk_setImageWith(url)
+                Nuke.loadImage(with: url, into: posterImageView)
                 if let name = person.name {
                     self.titleLabel.text = name
                 }
@@ -42,7 +42,7 @@ class MovieTableViewCell: UITableViewCell {
             
         case let movie as Movie:
             if let url = movie.posterImageURL {
-                self.posterImageView.nk_setImageWith(url)
+                Nuke.loadImage(with: url, into: posterImageView)
                 if let title = movie.title {
                     self.titleLabel.text = title
                 }

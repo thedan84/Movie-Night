@@ -1,36 +1,18 @@
+// The MIT License (MIT)
 //
-//  CustomCacheDemoViewController.swift
-//  Nuke Demo
-//
-//  Created by Alexander Grebenyuk on 18/03/16.
-//  Copyright © 2016 CocoaPods. All rights reserved.
-//
+// Copyright (c) 2016 Alexander Grebenyuk (github.com/kean).
 
 import Foundation
 import Nuke
 import DFCache
 
 class CustomCacheDemoViewController: BasicDemoViewController {
-    var previousManager: ImageManager!
-
-    deinit {
-        ImageManager.shared = self.previousManager
-    }
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.previousManager = ImageManager.shared
-
-        var managerConf = self.previousManager.configuration
-
-        var loaderConf = (managerConf.loader as! ImageLoader).configuration
-        loaderConf.cache = DFDiskCache(name: "test")
-
-        managerConf.loader = ImageLoader(configuration: loaderConf)
-
-        ImageManager.shared = (ImageManager(configuration: managerConf))
+        
+        let dataLoader = Nuke.CachingDataLoader(loader: Nuke.DataLoader(), cache: DFCache(name: "test", memoryCache: nil))
+        let loader = Nuke.Loader(loader: dataLoader, decoder: Nuke.DataDecoder(), cache: Nuke.Cache.shared)
+        manager = Manager(loader: loader, cache: Nuke.Cache.shared)
     }
 
 }

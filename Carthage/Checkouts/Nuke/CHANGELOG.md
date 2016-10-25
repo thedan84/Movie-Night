@@ -1,9 +1,87 @@
-[Changelog](https://github.com/kean/Nuke/releases) for all versions
+## Nuke 4.1.2
+
+Bunch of improvements in built-in `Promise`:
+- `Promise` now also uses new `Lock` - faster creation, faster locking
+- Add convenience `isPending`, `resolution`, `value` and `error` properties
+- Simpler implementation migrated from [Pill.Promise](https://github.com/kean/Pill)*
+
+*`Nuke.Promise` is a simplified variant of [Pill.Promise](https://github.com/kean/Pill) (doesn't allow `throws`, adds `completion`, etc). The `Promise` is built into Nuke to avoid fetching external dependencies.
+
+
+## Nuke 4.1.1
+
+- Fix deadlock in `Cache` - small typo, much embarrassment  😄 (https://github.com/kean/Nuke-Alamofire-Plugin/issues/8)
+
+
+## Nuke 4.1 ⚡️
+
+Nuke 4.1 is all about **performance**. Here are some notable performance improvements:
+
+- `loadImage(with:into:)` method with a default config is **6.3x** faster
+- `Cache` operations (write/hit/miss) are from **3.1x** to **4.5x** faster
+
+Nuke 4.0 focused on stability first, naturally there were some performance regressions. With the version 4.1 Nuke is again [the fastest framework](https://github.com/kean/Image-Frameworks-Benchmark) out there. The performance is ensured by a new set of performance tests.
+
+<img src="https://cloud.githubusercontent.com/assets/1567433/19019388/26463bb2-888f-11e6-87dd-42c2d82c5dae.png" width="500"/>
+
+If you're interested in the types of optimizations that were made check out recent commits. There is a lot of awesome stuff there!
+
+Nuke 4.1 also includes a new [Performance Guide](https://github.com/kean/Nuke/blob/master/Documentation/Guides/Performance%20Guide.md) and a collection of [Tips and Tricks](https://github.com/kean/Nuke/blob/master/Documentation/Guides/Tips%20and%20Tricks.md).
+
+### Other Changes
+
+- Add convenience method `loadImage(with url: URL, into target: AnyObject, handler: @escaping Handler)` (more useful than anticipated).
+- #88 Add convenience `cancelRequest(for:)` function
+- Use `@discardableResult` in `Promise` where it makes sense
+- Simplified `Loader` implementation
+- `Cache` nodes are no longer deallocated recursively on `removeAll()` and `deinit` (I was hitting stack limit in benchmarks, it's impossible in real-world use).
+- Fix: All `Cache` public `trim()` methods are now thread-safe too.
+
+
+## Nuke 4.0 🚀
+
+### Overview
+ 
+Nuke 4 has fully adopted the new **Swift 3** changes and conventions, including the new [API Design Guidelines](https://swift.org/documentation/api-design-guidelines/).
+ 
+Nuke 3 was already a slim framework. Nuke 4 takes it a step further by simplifying almost all of its components.
+ 
+Here's a few design principles adopted in Nuke 4:
+ 
+- **Protocol-Oriented Programming.** Nuke 3 promised a lot of customization by providing a set of protocols for loading, caching, transforming images, etc. However, those protocols were vaguely defined and hard to implement in practice. Protocols in Nuke 4 are simple and precise, often consisting of a single method.
+- **Single Responsibility Principle.** For example, instead of implementing preheating and deduplicating of equivalent requests in a single vague `ImageManager` class, those features were moved to separate classes (`Preheater`, `Deduplicator`). This makes core classes much easier to reason about.
+- **Principle of Least Astonishment**. Nuke 3 had a several excessive protocols, classes and methods which are *all gone* now (`ImageTask`, `ImageManagerConfiguration` just to name a few). Those features are much easier to use now.
+- **Simpler Async**. Image loading involves a lot of asynchronous code, managing it was a chore. Nuke 4 adopts two design patterns ([**Promise**](https://github.com/kean/Promise) and **CancellationToken**) that solve most of those problems.
+ 
+The adoption of those design principles resulted in a simpler, more testable, and more concise code base (which is now under 900 slocs, compared to AlamofireImage's 1426, and Kingfisher's whopping 2357).
+ 
+I hope that Nuke 4 is going to be a pleasure to use. Thanks for your interest 😄
+ 
+You can learn more about Nuke 4 in an in-depth [**Nuke 4 Migration Guide**](https://github.com/kean/Nuke/blob/master/Documentation/Migrations/Nuke%204%20Migration%20Guide.md).
+
+### Highlighted New Features
+ 
+#### LRU Memory Cache
+ 
+Nuke 4 features a new custom LRU memory cache which replaced `NSCache`. The primary reason behind this change was the fact that `NSCache` [is not LRU](https://github.com/apple/swift-corelibs-foundation/blob/master/Foundation/NSCache.swift). The new `Nuke.Cache` has some other benefits like better performance, and more control which would enable some new advanced features in future versions.
+
+#### Rate Limiter
+ 
+There is a known problem with `URLSession` that it gets trashed pretty easily when you resume and cancel `URLSessionTasks` at a very high rate (say, scrolling a large collection view with images). Some frameworks combat this problem by simply never cancelling `URLSessionTasks` which are already in `.running` state. This is not an ideal solution, because it forces users to wait for cancelled requests for images which might never appear on the display.
+ 
+Nuke has a better, classic solution for this problem - it introduces a new `RateLimiter` class which limits the rate at which `URLSessionTasks` are created. `RateLimiter` uses a [token bucket](https://en.wikipedia.org/wiki/Token_bucket) algorithm. The implementation supports quick bursts of requests which can be executed without any delays when "the bucket is full". This is important to prevent the rate limiter from affecting "normal" requests flow. `RateLimiter` is enabled by default.
+ 
+You can see `RateLimiter` in action in a new `Rate Limiter Demo` added in the sample project.
+
+#### Toucan Plugin
+
+Make sure to check out new [Toucan plugin](https://github.com/kean/Nuke-Toucan-Plugin) which provides a simple API for processing images. It supports resizing, cropping, rounded rect masking and more.
+ 
 
 ## Nuke 3.2
-
-- Swift 2.3 support
-- Preheating is now thread-safe #75
+ 
+ - Swift 2.3 support
+ - Preheating is now thread-safe #75
 
 ## Nuke 3.1.2
 
@@ -23,11 +101,11 @@
 ## Nuke 3.0.0
 
 - Update for Swift 2.2
-- Move `ImagePreheatingController` to a standalone package [Preheat](https://github.com/kean/Preheat)
+- Move `ImagePreheatController` to a standalone package [Preheat](https://github.com/kean/Preheat)
 - Remove deprecated `suspend` method from `ImageTask`
 - Remove `ImageFilterGaussianBlur` and Core Image helper functions which are now part of [Core Image Integration Guide](https://github.com/kean/Nuke/wiki/Core-Image-Integration-Guide)
 - Cleanup project structure (as expected by SPM)
-- `ImageManager` constructor now has a default value for configuration
+- `Manager` constructor now has a default value for configuration
 - `nk_setImageWith(URL:)` method no longer resizes images by default, because resizing is not effective in most cases
 - Remove `nk_setImageWith(request:options:placeholder:)` method, it's trivial
 - `ImageLoadingView` default implementation no longer implements "Cross Dissolve" animations, use `ImageViewLoadingOptions` instead (see `animations` or `handler` property)
@@ -68,13 +146,13 @@ Nuke now has an [official website](http://kean.github.io/Nuke/)!
 - #48 Update according to [Swift API Design Guidelines](https://swift.org/documentation/api-design-guidelines/). All APIs now just feel right.
 - Add `UIImage` extension with helper functions for `Core Image`: `nk_filter(_:)`, etc.
 - Add `ImageFilterGaussianBlur` as an example of a filter on top of `Core Image` framework
-- Add `ImageRequestMemoryCachePolicy` enum that specifies the way `ImageManager` interacts with a memory cache; `NSURLRequestCachePolicy` no longer affects memory cache
+- Add `ImageRequestMemoryCachePolicy` enum that specifies the way `Manager` interacts with a memory cache; `NSURLRequestCachePolicy` no longer affects memory cache
 - #17 Add `priority` to `ImageRequest`
-- Add `removeResponseForKey()` method to `ImageMemoryCaching` protocol and the corresponding method to `ImageManager`
+- Add `removeResponseForKey()` method to `ImageMemoryCaching` protocol and the corresponding method to `Manager`
 - Implement congestion control for `ImageLoader` that prevents `NSURLSession` trashing
 - Simplify `ImageLoaderDelegate` by combining methods that were customizing processing in a single high-level method: `imageLoader(_:processorFor:image:)`. Users now have more control over processing
 - Add `NSURLResponse?` parameter to `decode` method from `ImageDecoding` protocol
-- `ImageDataLoading` protocol no longer has `isLoadEquivalentRequest(_:toRequest)` and `isCacheEquivalentRequest(_:toRequest)`. Those methods are now part of `ImageLoaderDelegate` and they have default implementation
+- `DataLoading` protocol no longer has `isLoadEquivalentRequest(_:toRequest)` and `isCacheEquivalentRequest(_:toRequest)`. Those methods are now part of `ImageLoaderDelegate` and they have default implementation
 - `ImageResponseInfo` is now a struct
 - Improved error reporting (codes are now stored in enum, more codes were added, error is now created with a failure reason)
 
@@ -107,15 +185,15 @@ Nuke now has an [official website](http://kean.github.io/Nuke/)!
 - Fill most of the blanks in the documentation
 - #47 Fix target size rounding errors in image downscaling (Pyry Jahkola @pyrtsa)
 - Add `imageScale` property to `ImageDecoder` class that returns scale to be used when creating `UIImage` (iOS, tvOS, watchOS only)
-- Wrap each iteration in `ImageProcessorComposition` in an `autoreleasepool`
+- Wrap each iteration in `ProcessorComposition` in an `autoreleasepool`
 
 
 ## Nuke 1.2.0
 
-- #20 Add preheating for UITableView (see ImagePreheatingControllerForTableView class)
+- #20 Add preheating for UITableView (see ImagePreheatControllerForTableView class)
 - #41 Enhanced tvOS support thanks to @joergbirkhold
 - #39 UIImageView: ImageLoadingView extension no available on tvOS
-- Add factory method for creating session tasks in ImageDataLoader
+- Add factory method for creating session tasks in DataLoader
 - Improved documentation
 
 
@@ -145,6 +223,6 @@ extension MKAnnotationView: ImageDisplayingView, ImageLoadingView {
 ```
 - #30 Add UIImageView extension instead of custom UIImageView subclass
 - Back to the Mac! All new protocol and extensions for UI components (#30) are also available on a Mac, including new NSImageView extension.
-- #26 Add `getImageTaskWithCompletion(_:)` method to ImageManager
+- #26 Add `getImageTaskWithCompletion(_:)` method to Manager
 - Add essential documentation
 - Add handy extensions to ImageResponse

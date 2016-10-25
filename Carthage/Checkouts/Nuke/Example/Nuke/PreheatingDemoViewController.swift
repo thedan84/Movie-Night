@@ -1,45 +1,58 @@
+// The MIT License (MIT)
 //
-//  PreheatingDemoViewController.swift
-//  Nuke
-//
-//  Copyright (c) 2016 Alexander Grebenyuk (github.com/kean). All rights reserved.
-//
+// Copyright (c) 2016 Alexander Grebenyuk (github.com/kean).
 
 import UIKit
 import Nuke
 import Preheat
 
 private let cellReuseID = "reuseID"
+private var loggingEnabled = false
 
 class PreheatingDemoViewController: UICollectionViewController {
-    var photos: [NSURL]!
-    var preheatController: PreheatController<UICollectionView>!
+    var photos: [URL]!
+
+    var preheater: Preheater!
+    var preheatController: Preheat.Controller<UICollectionView>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         photos = demoPhotosURLs
-        preheatController = PreheatController(view: collectionView!)
-        preheatController.handler = { [weak self] in
-            self?.preheatWindowChanged(addedIndexPaths: $0, removedIndexPaths: $1)
+
+        preheater = Preheater()
+        preheatController = Preheat.Controller(view: collectionView!)
+        preheatController.handler = { [weak self] addedIndexPaths, removedIndexPaths in
+            self?.preheat(added: addedIndexPaths, removed: removedIndexPaths)
         }
         
-        collectionView?.backgroundColor = UIColor.whiteColor()
-        collectionView?.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: cellReuseID)
+        collectionView?.backgroundColor = UIColor.white
+        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellReuseID)
     }
-    
-    override func viewWillAppear(animated: Bool) {
+
+    func preheat(added: [IndexPath], removed: [IndexPath]) {
+        func requests(for indexPaths: [IndexPath]) -> [Request] {
+            return indexPaths.map { Request(url: photos[$0.row]) }
+        }
+        preheater.startPreheating(with: requests(for: added))
+        preheater.stopPreheating(with: requests(for: removed))
+        if loggingEnabled {
+            logAddedIndexPaths(added, removedIndexPaths: removed)
+        }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateItemSize()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         preheatController.enabled = true
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
         preheatController.enabled = false
@@ -61,67 +74,43 @@ class PreheatingDemoViewController: UICollectionViewController {
     
     // MARK: UICollectionView
     
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photos.count
     }
     
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellReuseID, forIndexPath: indexPath)
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseID, for: indexPath)
         cell.backgroundColor = UIColor(white: 235.0 / 255.0, alpha: 1.0)
         
-        let imageView = imageViewForCell(cell)
+        let imageView = self.imageView(for: cell)
         let imageURL = photos[indexPath.row]
         imageView.image = nil
-        imageView.nk_setImageWith(imageRequestWithURL(imageURL))
+        Manager.shared.loadImage(with: Request(url: imageURL), into: imageView)
         
         return cell
     }
     
-    func imageRequestWithURL(URL: NSURL) -> ImageRequest {
-        func imageTargetSize() -> CGSize {
-            let size = (collectionViewLayout as! UICollectionViewFlowLayout).itemSize
-            let scale = UIScreen.mainScreen().scale
-            return CGSize(width: size.width * scale, height: size.height * scale)
-        }
-        return ImageRequest(URL: URL, targetSize: imageTargetSize(), contentMode: .AspectFill)
-    }
-    
-    override func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        imageViewForCell(cell).nk_cancelLoading()
-    }
-    
-    func imageViewForCell(cell: UICollectionViewCell) -> UIImageView {
+    func imageView(for cell: UICollectionViewCell) -> UIImageView {
         var imageView = cell.viewWithTag(15) as? UIImageView
         if imageView == nil {
             imageView = UIImageView(frame: cell.bounds)
-            imageView!.autoresizingMask =  [.FlexibleWidth, .FlexibleHeight]
+            imageView!.autoresizingMask =  [.flexibleWidth, .flexibleHeight]
             imageView!.tag = 15
-            imageView!.contentMode = .ScaleAspectFill
+            imageView!.contentMode = .scaleAspectFill
             imageView!.clipsToBounds = true
             cell.addSubview(imageView!)
         }
         return imageView!
     }
-    
-    // MARK: Preheating
- 
-    func preheatWindowChanged(addedIndexPaths addedIndexPaths: [NSIndexPath], removedIndexPaths: [NSIndexPath]) {
-        func requestForIndexPaths(indexPaths: [NSIndexPath]) -> [ImageRequest] {
-            return indexPaths.map { imageRequestWithURL(photos[$0.row]) }
+}
+
+private func logAddedIndexPaths(_ addedIndexPath: [IndexPath], removedIndexPaths: [IndexPath]) {
+    func stringForIndexPaths(_ indexPaths: [IndexPath]) -> String {
+        guard indexPaths.count > 0 else {
+            return "[]"
         }
-        Nuke.startPreheatingImages(requestForIndexPaths(addedIndexPaths))
-        Nuke.stopPreheatingImages(requestForIndexPaths(removedIndexPaths))
-        logAddedIndexPaths(addedIndexPaths, removedIndexPaths: removedIndexPaths)
+        let items = indexPaths.map{ return "\(($0 as NSIndexPath).item)" }.joined(separator: " ")
+        return "[\(items)]"
     }
-    
-    func logAddedIndexPaths(addedIndexPath: [NSIndexPath], removedIndexPaths: [NSIndexPath]) {
-        func stringForIndexPaths(indexPaths: [NSIndexPath]) -> String {
-            guard indexPaths.count > 0 else {
-                return "[]"
-            }
-            let items = indexPaths.map{ return "\($0.item)" }.joinWithSeparator(" ")
-            return "[\(items)]"
-        }
-        print("did change preheat rect with added indexes \(stringForIndexPaths(addedIndexPath)), removed indexes \(stringForIndexPaths(removedIndexPaths))")
-    }
+    print("did change preheat rect with added indexes \(stringForIndexPaths(addedIndexPath)), removed indexes \(stringForIndexPaths(removedIndexPaths))")
 }

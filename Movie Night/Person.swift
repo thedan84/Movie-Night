@@ -13,9 +13,9 @@ struct Actor: MovieType {
     //MARK: - Properties
     let id: Int?
     let name: String?
-    let profileImageURL: NSURL?
+    let profileImageURL: URL?
     var selected = false
-    let type = Type.Actor
+    let type = Type.actor
     
     //MARK: - Initialization
     init?(json: JSONDict) {
@@ -23,7 +23,7 @@ struct Actor: MovieType {
         
         self.name = name
         self.id = id
-        if let imageURL = NSURL(string: "https://image.tmdb.org/t/p/w185\(profilePath)") {
+        if let imageURL = URL(string: "https://image.tmdb.org/t/p/w185\(profilePath)") {
             self.profileImageURL = imageURL
         } else {
             self.profileImageURL = nil
