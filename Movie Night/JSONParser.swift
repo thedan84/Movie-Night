@@ -10,7 +10,7 @@ import Foundation
 
 //Helper struct to parse incoming JSON data
 struct JSONParser {
-    static func parse(json: AnyObject, forMovieType movieType: Type, completion: (_ movieType: [MovieType]) -> Void) {
+    static func parse(_ json: AnyObject, forMovieType movieType: Type, completion: (_ movieType: [MovieType]) -> Void) {
         var movieTypeArray = [MovieType]()
         
         switch movieType {

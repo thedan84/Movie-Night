@@ -38,7 +38,7 @@ class ActorTableViewController: UITableViewController {
         
         movieManager.fetchPopularPeople(withPage: self.page) { (people, error) in
             if let error = error {
-                AlertManager.showAlertWith(title: "There appears to be a problem", message: error.localizedDescription, inViewController: self)
+                AlertManager.showAlertWith("There appears to be a problem", message: error.localizedDescription, inViewController: self)
             } else if let actors = people {
                 self.typeArray += actors
                 self.page += 1
@@ -49,7 +49,7 @@ class ActorTableViewController: UITableViewController {
         tableView.addInfiniteScrollingWithHandler {
             self.movieManager.fetchPopularPeople(withPage: self.page) { (people, error) in
                 if let error = error {
-                    AlertManager.showAlertWith(title: "There appears to be a problem", message: error.localizedDescription, inViewController: self)
+                    AlertManager.showAlertWith("There appears to be a problem", message: error.localizedDescription, inViewController: self)
                 } else if let actors = people {
                     self.typeArray += actors
                     self.page += 1
