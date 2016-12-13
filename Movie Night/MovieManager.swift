@@ -22,7 +22,7 @@ struct MovieManager {
         self.networkManager.requestEndpoint(.Movies, withQueryString: cast) { (result) in
             switch result {
             case .success(let object):
-                JSONParser.parse(object as AnyObject, forMovieType: .movie, completion: { (movieType) in
+                JSONParser.parse(json: object as AnyObject, forMovieType: .movie, completion: { (movieType) in
                     completion(movieType, nil)
                 })
             case .failure(let error): completion(nil, error)
@@ -35,7 +35,7 @@ struct MovieManager {
         self.networkManager.requestEndpoint(.PopularPeople, withQueryString: "\(page)") { (result) in
             switch result {
             case .success(let object):
-                JSONParser.parse(object as AnyObject, forMovieType: .actor, completion: { (people) in
+                JSONParser.parse(json: object as AnyObject, forMovieType: .actor, completion: { (people) in
                     completion(people, nil)
                 })
             case .failure(let error): completion(nil, error)
