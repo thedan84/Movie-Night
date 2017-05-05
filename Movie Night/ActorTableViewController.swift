@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ICSPullToRefresh
 
 //MARK: - Constants
 private let tableViewNibName = "MovieTableViewCell"
