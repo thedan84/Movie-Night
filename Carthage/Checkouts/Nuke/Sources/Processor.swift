@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2015-2018 Alexander Grebenyuk (github.com/kean).
 
 import Foundation
 
@@ -13,24 +13,24 @@ public protocol Processing: Equatable {
 /// Composes multiple processors.
 public struct ProcessorComposition: Processing {
     private let processors: [AnyProcessor]
-    
+
     /// Composes multiple processors.
     public init(_ processors: [AnyProcessor]) {
         self.processors = processors
     }
-    
+
     /// Processes the given image by applying each processor in an order in
     /// which they were added. If one of the processors fails to produce
     /// an image the processing stops and `nil` is returned.
     public func process(_ input: Image) -> Image? {
-        return processors.reduce(input as Image!) { image, processor in
-            return autoreleasepool { image != nil ? processor.process(image!) : nil }
+        return processors.reduce(input) { image, processor in
+            return autoreleasepool { image.flatMap(processor.process) }
         }
     }
-    
+
     /// Returns true if the underlying processors are pairwise-equivalent.
     public static func ==(lhs: ProcessorComposition, rhs: ProcessorComposition) -> Bool {
-        return lhs.processors.elementsEqual(rhs.processors)
+        return lhs.processors == rhs.processors
     }
 }
 
@@ -55,6 +55,23 @@ public struct AnyProcessor: Processing {
     }
 }
 
+internal struct AnonymousProcessor<Key: Hashable>: Processing {
+    private let _key: Key
+    private let _closure: (Image) -> Image?
+
+    init(_ key: Key, _ closure: @escaping (Image) -> Image?) {
+        self._key = key; self._closure = closure
+    }
+
+    func process(_ image: Image) -> Image? {
+        return self._closure(image)
+    }
+
+    static func ==(lhs: AnonymousProcessor, rhs: AnonymousProcessor) -> Bool {
+        return lhs._key == rhs._key
+    }
+}
+
 #if !os(macOS)
 
     import UIKit
@@ -64,19 +81,19 @@ public struct AnyProcessor: Processing {
     ///
     /// Decompressing compressed image formats (such as JPEG) can significantly
     /// improve drawing performance as it allows a bitmap representation to be
-    /// created in the background rather than on the main thread.
+    /// created in a background rather than on the main thread.
     public struct Decompressor: Processing {
-        
+
         /// An option for how to resize the image.
         public enum ContentMode {
             /// Scales the image so that it completely fills the target size.
             /// Doesn't clip images.
             case aspectFill
-            
+
             /// Scales the image so that it fits the target size.
             case aspectFit
         }
-        
+
         /// Size to pass to disable resizing.
         public static let MaximumSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
 
@@ -91,12 +108,12 @@ public struct AnyProcessor: Processing {
             self.targetSize = targetSize
             self.contentMode = contentMode
         }
-        
+
         /// Decompresses and scales the image.
         public func process(_ image: Image) -> Image? {
             return decompress(image, targetSize: targetSize, contentMode: contentMode)
         }
-        
+
         /// Returns true if both have the same `targetSize` and `contentMode`.
         public static func ==(lhs: Decompressor, rhs: Decompressor) -> Bool {
             return lhs.targetSize == rhs.targetSize && lhs.contentMode == rhs.contentMode
@@ -112,7 +129,7 @@ public struct AnyProcessor: Processing {
         }
         #endif
     }
-    
+
     private func decompress(_ image: UIImage, targetSize: CGSize, contentMode: Decompressor.ContentMode) -> UIImage {
         guard let cgImage = image.cgImage else { return image }
         let bitmapSize = CGSize(width: cgImage.width, height: cgImage.height)
@@ -121,18 +138,18 @@ public struct AnyProcessor: Processing {
         let scale = contentMode == .aspectFill ? max(scaleHor, scaleVert) : min(scaleHor, scaleVert)
         return decompress(image, scale: CGFloat(min(scale, 1)))
     }
-    
+
     private func decompress(_ image: UIImage, scale: CGFloat) -> UIImage {
         guard let cgImage = image.cgImage else { return image }
 
         let size = CGSize(width: round(scale * CGFloat(cgImage.width)), height: round(scale * CGFloat(cgImage.height)))
-        
+
         // For more info see:
         // - Quartz 2D Programming Guide
         // - https://github.com/kean/Nuke/issues/35
         // - https://github.com/kean/Nuke/issues/57
         let alphaInfo: CGImageAlphaInfo = isOpaque(cgImage) ? .noneSkipLast : .premultipliedLast
-        
+
         guard let ctx = CGContext(data: nil, width: Int(size.width), height: Int(size.height), bitsPerComponent: 8, bytesPerRow: 0, space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: alphaInfo.rawValue) else {
             return image
         }
@@ -140,7 +157,7 @@ public struct AnyProcessor: Processing {
         guard let decompressed = ctx.makeImage() else { return image }
         return UIImage(cgImage: decompressed, scale: image.scale, orientation: image.imageOrientation)
     }
-    
+
     private func isOpaque(_ image: CGImage) -> Bool {
         let alpha = image.alphaInfo
         return alpha == .none || alpha == .noneSkipFirst || alpha == .noneSkipLast

@@ -73,7 +73,7 @@ class ActorTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! MovieTableViewCell
         
-        let type = typeArray[(indexPath as NSIndexPath).row]
+        let type = typeArray[indexPath.row]
         cell.configureWithMovieType(type)
         
         if type.selected {
@@ -88,10 +88,10 @@ class ActorTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        var type = typeArray[(indexPath as NSIndexPath).row]
+        var type = typeArray[indexPath.row]
         
-        type.selected = !type.selected
-        typeArray[(indexPath as NSIndexPath).row] = type
+        type.selected = !typeArray[indexPath.row].selected
+        typeArray[indexPath.row] = type
         
         if type.selected {
             if user1Choices.count < limitOfSelections {
@@ -167,7 +167,7 @@ class ActorTableViewController: UITableViewController {
         return finalChoices
     }
     
-    func dismissView() {
+    @objc func dismissView() {
         self.dismiss(animated: true, completion: nil)
     }
 }

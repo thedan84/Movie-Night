@@ -73,7 +73,7 @@ class MovieTableViewController: UITableViewController {
     }
     
     //MARK: - Helper methods
-    func startOver() {
+    @objc func startOver() {
         self.dismiss(animated: true, completion: nil)
     }
 }

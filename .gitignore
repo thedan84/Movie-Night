@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+__MACOSX
+
+# Xcode
+*.xcuserdatad
+
+# Carthage
+Carthage/Checkouts
+Carthage/Build
