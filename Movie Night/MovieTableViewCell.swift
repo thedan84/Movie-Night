@@ -34,7 +34,7 @@ class MovieTableViewCell: UITableViewCell {
         case let person as Actor:
             
             if let url = person.profileImageURL {
-                Manager.shared.loadImage(with: url, into: posterImageView)
+                Nuke.loadImage(with: url, into: posterImageView)
                 if let name = person.name {
                     self.titleLabel.text = name
                 }
@@ -42,7 +42,7 @@ class MovieTableViewCell: UITableViewCell {
             
         case let movie as Movie:
             if let url = movie.posterImageURL {
-                Manager.shared.loadImage(with: url, into: posterImageView)
+                Nuke.loadImage(with: url, into: posterImageView)
                 if let title = movie.title {
                     self.titleLabel.text = title
                 }

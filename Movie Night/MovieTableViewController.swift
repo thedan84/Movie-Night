@@ -47,7 +47,7 @@ class MovieTableViewController: UITableViewController {
             }
         }
         
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 120
     }
 

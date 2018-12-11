@@ -1,0 +1,20 @@
+PODS:
+  - ICSPullToRefresh (0.6)
+  - Nuke (7.5.1)
+
+DEPENDENCIES:
+  - ICSPullToRefresh
+  - Nuke
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - ICSPullToRefresh
+    - Nuke
+
+SPEC CHECKSUMS:
+  ICSPullToRefresh: a64f102c6558cc34270ea60e99df7c91d1f3d2c0
+  Nuke: 3814db501e55f17951451839c726ffd91641e9a5
+
+PODFILE CHECKSUM: 3d0e6f2b7b63406c9e7bfc4fcad0cf95d7d13eb3
+
+COCOAPODS: 1.5.3

@@ -1,9 +1,0 @@
-{
-  "commitish" : "0.6",
-  "iOS" : [
-    {
-      "name" : "ICSPullToRefresh",
-      "hash" : "e3dcd7ff92b4255778f5e1d93a6a55c8e887a852620ea2d6d4e335188893571f"
-    }
-  ]
-}

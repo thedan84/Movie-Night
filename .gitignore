@@ -5,6 +5,5 @@ __MACOSX
 # Xcode
 *.xcuserdatad
 
-# Carthage
-Carthage/Checkouts
-Carthage/Build
+# CocoaPods
+Pods/

@@ -60,7 +60,7 @@ class ActorTableViewController: UITableViewController {
             }
         }
 
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 120
         self.tableView.allowsMultipleSelection = true
     }
